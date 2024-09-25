@@ -3,24 +3,25 @@ services:
     build: .
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
+    volumes:  # Mount Only Necessary Files: Instead of mounting the entire directory, consider mounting only specific directories or files that you need for development.
+      - ./src:/app/src
+      - ./config:/app/config
     command: npm run dev  # "npm run dev" is configured to run nuxt dev, which provides a development server with hot-reloading capabilities for Nuxt.js applications. It is better for development mode because it automatically restarts on changes. You can switch to "npm start" in production. "npm start" is set to run node server/index.js, which starts the application with the configuration intended for production.
     depends_on:
       - mysql  # Ensures that MySQL starts before the app tries to connect.
     environment:  # These DB_ variables are not responsible for creating or managing the database, they are just the information your app needs to connect to it.
-      - DB_HOST=mysql  # Points to the mysql service
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=password
-      - DB_NAME=ecommerce2
+      - DB_HOST=${DB_HOST}  # Points to the mysql service
+      - DB_PORT=${DB_PORT}
+      - DB_USER={DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     working_dir: /app  # The working directory in the container
 
   mysql:  # The mysql service is where your MySQL database runs inside Docker. The mysql service "sets up and runs" the database.
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: password # Only use MYSQL_ROOT_PASSWORD here
-      MYSQL_DATABASE: ecommerce2
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} # Only use MYSQL_ROOT_PASSWORD here
+      MYSQL_DATABASE: ${DB_NAME}
     ports:
       - "3306:3306"
     volumes:

@@ -1,0 +1,14 @@
+# Ignore node_modules (if not needed in the container)
+node_modules
+# Ignore build artifacts
+dist
+# Ignore Git configuration
+.git
+# Ignore logs
+*.log
+
+# Ignore Dockerfile
+# Dockerfile (if you're copying it for some reason. Usually you don't need to include your Dockerfile in the Docker image itself. The Dockerfile is used to build the Docker image, but once the image is built, the Dockerfile is no longer needed within the image. Excluding files that aren’t needed for running your application helps keep the image smaller. Excluding sensitive or unnecessary files reduces the risk of exposing them in a container.)
+
+# Ignore .env (if it contains sensitive information)
+.env
