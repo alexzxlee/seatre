@@ -1,4 +1,3 @@
-version: '3'
 services:
   app:  # The app service is where your application (Nuxt.js + Express) runs in its own Docker container. The app service "connects" to the database. The app service only needs to connect to that database, so it uses its own set of variables (DB_) to refer to the MySQL database without redefining what has already been done in the mysql service. Therefore, no need to duplicate the password or database creation in the app service.
     build: .
@@ -20,14 +19,12 @@ services:
   mysql:  # The mysql service is where your MySQL database runs inside Docker. The mysql service "sets up and runs" the database.
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password # Only use MYSQL_ROOT_PASSWORD here
       MYSQL_DATABASE: ecommerce2
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql  # Persistent storage for MySQL data. Consistent naming for volume.
 
 volumes:
-  db-data:  # The volume name should match the one used in the mysql service.
+  db_data:  # The volume name should match the one used in the mysql service.
