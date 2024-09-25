@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
+# Install ts-node for handling TypeScript
+RUN npm install ts-node --save-dev
+
 # Expose port 3000 to the outside world
 EXPOSE 3000
 
