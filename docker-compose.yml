@@ -1,9 +1,33 @@
 version: '3'
 services:
-  app:
+  app:  # The app service is where your application (Nuxt.js + Express) runs in its own Docker container. The app service "connects" to the database. The app service only needs to connect to that database, so it uses its own set of variables (DB_) to refer to the MySQL database without redefining what has already been done in the mysql service. Therefore, no need to duplicate the password or database creation in the app service.
     build: .
     ports:
       - "3000:3000"
     volumes:
       - .:/app
-    command: npm start
+    command: npm run dev  # "npm run dev" is configured to run nuxt dev, which provides a development server with hot-reloading capabilities for Nuxt.js applications. It is better for development mode because it automatically restarts on changes. You can switch to "npm start" in production. "npm start" is set to run node server/index.js, which starts the application with the configuration intended for production.
+    depends_on:
+      - mysql  # Ensures that MySQL starts before the app tries to connect.
+    environment:  # These DB_ variables are not responsible for creating or managing the database, they are just the information your app needs to connect to it.
+      - DB_HOST=mysql  # Points to the mysql service
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=ecommerce2
+    working_dir: /app  # The working directory in the container
+
+  mysql:  # The mysql service is where your MySQL database runs inside Docker. The mysql service "sets up and runs" the database.
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ecommerce2
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql  # Persistent storage for MySQL data. Consistent naming for volume.
+
+volumes:
+  db-data:  # The volume name should match the one used in the mysql service.

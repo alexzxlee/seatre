@@ -20,4 +20,5 @@ RUN npm install ts-node --save-dev
 EXPOSE 3000
 
 # Command to run the application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
+# Updated to match docker-compose.yml, which command: npm run dev is for development mode, whereas npm start is for in production. 
