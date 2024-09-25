@@ -1,8 +1,10 @@
-const express = require("express");
-const { createNuxt } = require("nuxt");
-const path = require("path");
-const { readFileSync } = require("fs");
+// Import necessary modules using ES module syntax
+import express from 'express';
+import { createNuxt } from 'nuxt';
+import path from 'path';
+import { readFileSync } from 'fs';
 
+// Initialize Express and set the port
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -10,9 +12,9 @@ const port = process.env.PORT || 3000;
 const isProd = process.env.NODE_ENV === 'production';
 
 // Read TypeScript configuration
-const nuxtConfig = require('ts-node/register');
-const configPath = path.resolve(__dirname, '../nuxt.config.ts');
-const config = require(configPath);
+import 'ts-node/register';
+const configPath = path.resolve(process.cwd(), 'nuxt.config.ts');
+const config = (await import(configPath)).default; // Dynamically import the Nuxt config
 
 async function start() {
   const nuxt = await createNuxt(config);
