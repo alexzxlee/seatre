@@ -1,0 +1,14 @@
+{
+  "name": "server-service",
+  "version": "1.0.0",
+  "main": "auth-service.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node auth-service.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  }
+}

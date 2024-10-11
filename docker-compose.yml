@@ -1,13 +1,16 @@
 services:
   app:  # The app service is where your application (Nuxt.js + Express) runs in its own Docker container. The app service "connects" to the database. The app service only needs to connect to that database, so it uses its own set of variables (DB_) to refer to the MySQL database without redefining what has already been done in the mysql service. Therefore, no need to duplicate the password or database creation in the app service.
-    build: .
+    build: .  # ./app
     ports:
       - "3000:3000"
-    volumes:  # Mount Only Necessary Files: Instead of mounting the entire directory, consider mounting only specific directories or files that you need for development.
-      - ./src:/app/src
-      - ./config:/app/config
+    volumes:  # Mount only necessary files: Instead of mounting the entire directory, consider mounting only specific directories or files that you need for development.
+      # - ./src:/app/src
+      # - ./config:/app/config
+      - .:/app  # Mount the entire project directory
+      - /app/node_modules  # Ensure node_modules inside the container is not overwritten by the mounted directory (the host machine's).
     command: npm run dev  # "npm run dev" is configured to run nuxt dev, which provides a development server with hot-reloading capabilities for Nuxt.js applications. It is better for development mode because it automatically restarts on changes. You can switch to "npm start" in production. "npm start" is set to run node server/index.js, which starts the application with the configuration intended for production.
     depends_on:
+      - server-service
       - mysql  # Ensures that MySQL starts before the app tries to connect.
     environment:  # These DB_ variables are not responsible for creating or managing the database, they are just the information your app needs to connect to it.
       - DB_HOST=${DB_HOST}  # Points to the mysql service
@@ -16,6 +19,16 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     working_dir: /app  # The working directory in the container
+
+  server-service:
+    build: ./server
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./server:/server
+      - /server/node_modules  # It fixed the issue of "Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'express' imported from /server/auth-service.js"
+    command: npm run dev # The --prefix server option is used to specify the directory where the package.json file is located when running npm commands. It's defined below in the working_dir option.
+    working_dir: /server
 
   mysql:  # The mysql service is where your MySQL database runs inside Docker. The mysql service "sets up and runs" the database.
     image: mysql:8.0

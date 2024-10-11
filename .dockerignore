@@ -1,14 +1,14 @@
-# Ignore node_modules (if not needed in the container)
+# Ignore node_modules (if not needed in the container). You should ignore this directory if you are mounting it as a volume in your Docker Compose file.
 node_modules
-# Ignore build artifacts
+# Ignore build artifacts is generally a good practice.
 dist
-# Ignore Git configuration
+# Ignore Git configuration is also a good practice.
 .git
-# Ignore logs
+# Ignore log files is recommended.
 *.log
 
-# Ignore Dockerfile
-# Dockerfile (if you're copying it for some reason. Usually you don't need to include your Dockerfile in the Docker image itself. The Dockerfile is used to build the Docker image, but once the image is built, the Dockerfile is no longer needed within the image. Excluding files that aren’t needed for running your application helps keep the image smaller. Excluding sensitive or unnecessary files reduces the risk of exposing them in a container.)
+# Ignore Dockerfile (if you're copying it for some reason. Usually you don't need to include your Dockerfile in the Docker image itself. The Dockerfile is used to build the Docker image, but once the image is built, the Dockerfile is no longer needed within the image. Excluding files that aren’t needed for running your application helps keep the image smaller. Excluding sensitive or unnecessary files reduces the risk of exposing them in a container.)
+# Dockerfile 
 
-# Ignore .env (if it contains sensitive information)
+# Ignore .env (Ignoring environment files is crucial if they contain sensitive information.)
 .env
