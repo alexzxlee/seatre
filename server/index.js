@@ -1,36 +1,38 @@
-// Import necessary modules using ES module syntax
-import express from 'express';
-import { createNuxt } from 'nuxt';
-import path from 'path';
-import { readFileSync } from 'fs';
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import { consola } from 'consola'
+import sequelize from './sequelize.js'
+import authRouter from './routes/auth.js'
 
-// Initialize Express and set the port
-const app = express();
-const port = process.env.PORT || 3000;
+const app = express()
+const PORT = process.env.PORT || 3001
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
-// Import and Set Nuxt.js options
-const isProd = process.env.NODE_ENV === 'production';
+app.use(cors({ origin: FRONTEND_URL, credentials: true }))
+app.use(express.json())
+app.use(cookieParser())
 
-// Read TypeScript configuration
-import 'ts-node/register';
-const configPath = path.resolve(process.cwd(), 'nuxt.config.ts');
-const config = (await import(configPath)).default; // Dynamically import the Nuxt config
+app.get('/healthz', async (_req, res) => {
+  try {
+    await sequelize.authenticate()
+    res.json({ ok: true })
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message })
+  }
+})
+
+// API routes
+app.use('/api/auth', authRouter)
 
 async function start() {
-  const nuxt = await createNuxt(config);
-
-  if (!isProd) {
-    await nuxt.ready();
+  try {
+    await sequelize.authenticate()
+    consola.ready('DB connected')
+  } catch (e) {
+    consola.error(`DB connection failed: ${e.message}`)
   }
-
-  app.use(nuxt.render);
-
-  app.listen(port, () => {
-    console.log(`Server listening on http://localhost:${port}`);
-  });
+  app.listen(PORT, () => consola.ready(`Backend running on http://localhost:${PORT}`))
 }
-
-start().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+start()

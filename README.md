@@ -1,3 +1,14 @@
+Split architecture: Nuxt 3 frontend + Express backend
+
+Run in Docker:
+- docker-compose up --build
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
+
+Environment:
+- FRONTEND_URL=http://localhost:3000
+- DB_HOST=mysql, DB_USER=root, DB_PASSWORD=..., DB_NAME=...
+- JWT_SECRET=...
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.

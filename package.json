@@ -1,24 +1,8 @@
 {
-  "name": "nuxt-app",
+  "name": "ecommerce2",
   "private": true,
-  "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "start": "node server/index.js"
-  },
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "express": "^4.21.0",
-    "jsonwebtoken": "^9.0.2",
-    "nuxt": "^3.13.0",
-    "vue": "latest",
-    "vue-router": "latest"
-  },
-  "devDependencies": {
-    "ts-node": "^10.9.2"
+    "dev": "docker-compose up --build",
+    "down": "docker-compose down -v"
   }
 }

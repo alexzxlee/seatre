@@ -1,52 +1,25 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken'
 
-const app = express();
-const PORT = 3001;
-const users = [{ id: 1, username: 'user1', password: bcrypt.hashSync('password1', 8), role: 'admin' }];
-const SECRET = 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_me'
+const COOKIE_NAME = 'auth_token'
 
-app.use(express.json());
+export function issueToken(user) {
+  return jwt.sign({ sub: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' })
+}
 
-// Authentication route
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username);
-
-  if (user && bcrypt.compareSync(password, user.password)) {
-    const token = jwt.sign({ userId: user.id, role: user.role }, SECRET, { expiresIn: '1h' });
-    return res.json({ token });
+export function requireAuth(req, res, next) {
+  const token = req.cookies?.[COOKIE_NAME]
+  if (!token) return res.status(401).json({ message: 'Unauthorized' })
+  try {
+    const payload = jwt.verify(token, JWT_SECRET)
+    req.user = { id: payload.sub, email: payload.email, role: payload.role }
+    next()
+  } catch {
+    return res.status(401).json({ message: 'Invalid token' })
   }
+}
 
-  return res.status(401).json({ message: 'Invalid credentials' });
-});
-
-// Middleware to check the token
-const authenticateJWT = (req, res, next) => {
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'No token provided' });
-
-  jwt.verify(token, SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Token is invalid' });
-    req.user = user;
-    next();
-  });
-};
-
-// Protected route
-app.get('/protected', authenticateJWT, (req, res) => {
-  res.json({ message: 'You are authorized', user: req.user });
-});
-
-// Admin route with permission check
-app.get('/admin', authenticateJWT, (req, res) => {
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ message: 'You do not have the necessary permissions' });
-  }
-  res.json({ message: 'Welcome, Admin!' });
-});
-
-app.listen(PORT, () => {
-  console.log(`Auth service running on port ${PORT}`);
-});
+export function requireAdmin(req, res, next) {
+  if (req.user?.role !== 'admin') return res.status(403).json({ message: 'Forbidden' })
+  next()
+}
