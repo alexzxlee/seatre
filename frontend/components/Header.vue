@@ -117,15 +117,13 @@
               </ul>
             </teleport>
           </li>
-        <li>
-          <button type="button" class="theme-toggle-btn" @click="toggleColorMode" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
-            <span v-if="!isDark">🌙</span>
-            <span v-else>☀️</span>
-          </button>
-        </li>
-          <li>
-          <NuxtLink to="/login" >Login</NuxtLink>
-        </li>
+          <li class="nav-item plain">
+            <button type="button" class="theme-toggle-btn" @click="toggleColorMode" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+              <span v-if="!isDark">🌙</span>
+              <span v-else>☀️</span>
+            </button>
+          </li>
+          <li class="nav-item login last-item"><NuxtLink to="/login" class="login-link">Login</NuxtLink></li>
         </ul>
 	  </nav>
   </header>
