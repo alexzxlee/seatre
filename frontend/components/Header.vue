@@ -117,14 +117,28 @@
               </ul>
             </teleport>
           </li>
-          <li >Login2<NuxtLink to="/login">Login</NuxtLink></li>
+        <li>
+          <button type="button" class="theme-toggle-btn" @click="toggleColorMode" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+            <span v-if="!isDark">🌙</span>
+            <span v-else>☀️</span>
+          </button>
+        </li>
+          <li>
+          <NuxtLink to="/login" >Login</NuxtLink>
+        </li>
         </ul>
 	  </nav>
   </header>
 </template>
 
 <script setup>
-import { ref, reactive, watch, nextTick } from 'vue'
+import { ref, reactive, watch, nextTick, computed } from 'vue'
+// color-mode composable is auto-imported by Nuxt; no explicit import needed
+const colorMode = useColorMode()
+const isDark = computed(() => colorMode.value === 'dark')
+function toggleColorMode() {
+  colorMode.preference = isDark.value ? 'light' : 'dark'
+}
 const openDropdown = ref(null)
 const dropdownHover = ref(false)
 const menuHover = ref(false)
@@ -152,6 +166,28 @@ watch(openDropdown, async (val) => {
 </script>
 
 <style scoped>
+/* Dark mode toggle button */
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--color-border, #ddd);
+  color: var(--color-fg, #111);
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.theme-toggle-btn:hover {
+  background: rgba(0,0,0,0.06);
+}
+.dark .theme-toggle-btn:hover {
+  background: rgba(255,255,255,0.08);
+}
+
 .logo-brand {
   display: flex;
   align-items: center;
