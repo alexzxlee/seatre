@@ -1,11 +1,19 @@
+import tailwindcss from '@tailwindcss/vite'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  modules: [
+    '@nuxt/ui'
+  ],
+  // Minimal @nuxt/ui config (colors can be customized via CSS variables or tailwind theme if needed)
+  ui: {},
   runtimeConfig: {
     public: {
       apiBase: process.env.API_BASE || '/api'
     }
   },
   vite: {
+    plugins: [tailwindcss()],
     server: {
       proxy: {
         '/api': {
@@ -14,5 +22,6 @@ export default defineNuxtConfig({
         }
       }
     }
-  }
+  },
+  css: ['~/assets/css/main.css']
 })

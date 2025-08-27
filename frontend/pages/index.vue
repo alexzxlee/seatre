@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<HeroSection />
 		<h1>Welcome to the Home Page</h1>
 		<p>This is the main content of the home page.</p>
 		<p>/index route, SSR-rendered HTML.</p>
@@ -11,6 +12,7 @@
 </template>
 
 <script setup>
+import HeroSection from '~/components/HeroSection.vue'
 // Public page. No authentication required for home page.
 </script>
 
