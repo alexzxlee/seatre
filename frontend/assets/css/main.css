@@ -1,38 +1,203 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Simplified Tailwind + Nuxt UI imports (Tailwind v4 style) https://github.com/nuxt/ui */
+@import "tailwindcss";
+@import "@nuxt/ui";
 
-/* CSS Variables for light & dark themes */
+/* Theme variables: CSS Variables for light & dark themes */
 :root {
-  --color-brand: #2563eb; /* blue-600 */
+  --color-main: darkblue;
+  --color-main-hover:#2563eb;
+  --color-brand: #2563eb;
   --color-brand-foreground: #ffffff;
   --color-bg: #ffffff;
-  --color-fg: #111827; /* gray-900 */
-  --color-muted: #6b7280; /* gray-500 */
-  --color-border: #e5e7eb; /* gray-200 */
+  --color-fg: #111827;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-nav-hover: #059669;
 }
 
 .dark {
-  --color-brand: #3b82f6; /* slightly lighter for dark bg */
-  --color-brand-foreground: #ffffff;
-  --color-bg: #0f172a; /* slate-900 */
-  --color-fg: #f1f5f9; /* slate-100 */
-  --color-muted: #94a3b8; /* slate-400 */
-  --color-border: #334155; /* slate-700 */
+  --color-bg: #0f172a;
+  --color-fg: #f1f5f9;
+  --color-muted: #94a3b8;
+  --color-border: #334155;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-bg);
+  background: var(--color-bg);
   color: var(--color-fg);
-  transition: background-color 0.25s, color 0.25s;
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  margin: 0;
 }
 
-a { color: var(--color-brand); }
-a:hover { text-decoration: underline; }
+a { color: var(--color-main); text-decoration: none; }
+a:hover { text-decoration: none; }
+
+/* Dropdown override to ensure it floats above hero video */
+.dropdown-menu,
+.dropdown-fixed {
+  z-index: 1200 !important;
+}
+
+/* Header layout */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  width: 100vw;
+  z-index: 3000;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  padding: 0 .5rem;
+}
+.site-header::before {
+  content:'';
+  position:absolute; 
+  inset:0 0 0 0;
+  background:url('/seatre_2.jpg') center/cover no-repeat;
+  opacity:.4; 
+  pointer-events:none; 
+  z-index:-1;
+}
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.brand {
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+}
+.brand-text {
+  font-size:1.5rem;
+  font-weight:700;
+  color:darkblue;
+  margin-left:.6rem;
+  line-height:1;
+  white-space:nowrap;
+}
+
+/* Reusable buttons */
+.theme-toggle-btn {
+  background:transparent;
+  border:1px solid var(--color-border,#ddd);
+  color:var(--color-fg,#111);
+  padding:.45rem .7rem;
+  border-radius:.6rem;
+  font-size:.9rem;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+  transition:background .2s;
+}
+.theme-toggle-btn:hover { background:rgba(0,0,0,.06); }
+.dark .theme-toggle-btn:hover { background:rgba(255,255,255,.08); }
+
+.login-link {
+  white-space:nowrap;
+  font-weight:600;
+  padding:.55rem .9rem;
+  border-radius:.5rem;
+  text-decoration:none;
+  color:darkblue;
+  transition:background .15s;
+}
+.login-link:hover { background:rgba(0,0,0,.05); }
+.dark .login-link:hover { background:rgba(255,255,255,.10); }
+
+/* UNavigationMenu global overrides (Nuxt UI v3 uses data attributes) */
+[data-navigation-menu] [data-navigation-menu-trigger] {
+  cursor: pointer;
+  width: auto;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-radius: .5rem;
+  position: relative;
+}
+
+/* Force brand color even if text-muted class present */
+[data-navigation-menu-trigger].text-muted,
+[data-navigation-menu] [data-navigation-menu-trigger] {
+  color: var(--color-main) !important;
+}
+
+[data-navigation-menu] [data-navigation-menu-trigger]::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:transparent;
+  transition:background .15s;
+  z-index:-1;
+}
+
+[data-navigation-menu] [data-navigation-menu-trigger]:hover::before,
+[data-navigation-menu] [data-navigation-menu-trigger][data-state="open"]::before {
+  background:rgba(0,0,0,.05);
+}
+.dark [data-navigation-menu] [data-navigation-menu-trigger]:hover::before,
+.dark [data-navigation-menu] [data-navigation-menu-trigger][data-state="open"]::before {
+  background:rgba(255,255,255,.12);
+}
+
+/* Dropdown */
+[data-navigation-menu-content] {
+  z-index:4000 !important;
+  backdrop-filter:blur(10px);
+}
+
+[data-navigation-menu-content] a,
+[data-navigation-menu-content] [role="menuitem"] {
+  color:var(--color-main) !important;
+  cursor:pointer;
+  display:block;
+  border-radius:.5rem;
+  padding:.5rem .75rem;
+  text-decoration:none;
+  transition:background .15s;
+}
+[data-navigation-menu-content] a:hover,
+[data-navigation-menu-content] [role="menuitem"]:hover {
+  background:rgba(0,0,0,.05);
+}
+.dark [data-navigation-menu-content] a:hover,
+.dark [data-navigation-menu-content] [role="menuitem"]:hover {
+  background:rgba(255,255,255,.12);
+}
+
+[data-navigation-menu-content] [aria-disabled="true"] {
+  opacity:.55;
+  cursor:default;
+  pointer-events:none;
+}
+
+/* Ensure hero/video background is below */
+.hero,
+.hero-video,
+.hero-video-wrapper,
+.hero-background,
+#hero,
+.video-bg {
+  position: relative;
+  z-index: 0 !important;
+  /* Remove transforms that create new stacking contexts if present */
+  transform: none !important;
+  filter: none !important;
+}
 
 /* Utility helpers */
 .border-base { border-color: var(--color-border); }
 .text-muted { color: var(--color-muted); }
+
+/* FINAL enforce pointer cursor (beats any later utility) */
+/* [data-navigation-menu-trigger],
+[data-navigation-menu-trigger] *,
+button[data-navigation-menu-trigger] {
+  cursor: pointer !important;
+} */
+
+/* (Optional) give all buttons a pointer just in case */
+/* button { cursor: pointer; } */
