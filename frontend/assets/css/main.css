@@ -46,16 +46,23 @@ a:hover { text-decoration: none; }
   z-index: 3000;
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(10px);
-  padding: 0 .5rem;
+  padding: 0 7.5rem; /* Add this line for left/right space */
 }
 .site-header::before {
   content:'';
   position:absolute; 
   inset:0 0 0 0;
-  background:url('/seatre_2.jpg') center/cover no-repeat;
-  opacity:.4; 
+  background:linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),url('/seatre_2.jpg') center/cover no-repeat;
+  opacity:.9; 
   pointer-events:none; 
   z-index:-1;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0; height: 32px;
+  pointer-events: none;
+  z-index: 2;
 }
 .header-inner {
   max-width: 1400px;

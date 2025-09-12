@@ -54,7 +54,7 @@ const nextVideo = () => {
   justify-content: center;
   min-height: 320px;
   max-height: 80vh;
-  margin-top: 90px; /* offset for fixed header */
+  margin-top: 16px; /* offset for fixed header */
 }
 .video-carousel {
   width: 100%;
@@ -74,41 +74,41 @@ const nextVideo = () => {
   z-index: 1;
   aspect-ratio: 16/9;
 }
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 2;
-    padding: 0;
-    box-shadow: none;
-    transition: filter 0.2s;
-  }
-  .arrow.left { left: 2vw; }
-  .arrow.right { right: 2vw; }
-  .arrow:focus {
-    outline: none;
-  }
-  .arrow:hover .chevron {
-    filter: drop-shadow(0 0 6px #fff);
-  }
-  .chevron {
-    width: 48px;
-    height: 48px;
-    stroke: #fff;
-    stroke-width: 3;
+.arrow {
+position: absolute;
+top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+  box-shadow: none;
+  transition: filter 0.2s;
+}
+.arrow.left { left: 2vw; }
+.arrow.right { right: 2vw; }
+.arrow:focus {
+  outline: none;
+}
+.arrow:hover .chevron {
+  filter: drop-shadow(0 0 6px #fff);
+}
+.chevron {
+  width: 48px;
+  height: 48px;
+  stroke: #fff;
+  stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
     fill: none;
     display: block;
-  }
+}
 .hero-overlay {
   position: relative;
   z-index: 3;

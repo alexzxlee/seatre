@@ -107,11 +107,6 @@ const items = ref([
     icon: 'i-simple-icons-github',
     to: 'https://github.com/nuxt/ui',
     target: '_blank'
-  },
-  {
-    label: 'Help',
-    icon: 'i-lucide-circle-help',
-    disabled: true
   }
 ])
 </script>
