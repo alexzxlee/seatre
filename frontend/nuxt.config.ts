@@ -1,3 +1,4 @@
+// @ts-nocheck
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
@@ -33,6 +34,7 @@ export default defineNuxtConfig({
       },
       hmr: {
         timeout: 30000 // 30 seconds instead of 10s (500 Sever Error: Request timeout after 10000ms for type: module)
+    
       }
     }
   },

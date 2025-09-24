@@ -54,7 +54,7 @@ const nextVideo = () => {
   justify-content: center;
   min-height: 320px;
   max-height: 80vh;
-  margin-top: 16px; /* offset for fixed header */
+  margin-top: 24px; /* offset for fixed header */
 }
 .video-carousel {
   width: 100%;
@@ -113,11 +113,11 @@ top: 50%;
   position: relative;
   z-index: 3;
   color: #fff;
-  text-align: center;
+  text-align: left;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   pointer-events: none;
 }
@@ -138,14 +138,14 @@ top: 50%;
   color: #fff;
   border: none;
   border-radius: 2rem;
-  padding: 0.8rem 2.2rem;
-  font-size: 1.2rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 2px 8px #0003;
   transition: background 0.2s;
 }
 .hero-btn:hover {
-  background: #094bb5;
+  background: seagreen;
 }
 </style>

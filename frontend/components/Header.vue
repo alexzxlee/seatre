@@ -1,53 +1,93 @@
 <template>
-  <header class="site-header">
+  <header class="site-header pt-6">
     <div class="header-inner">
-      <NuxtLink to="/" class="brand">
-        <span class="logo-svg">
-          <span class="logo-rotate">
-            <span class="logo-pulse-fade">
-              <svg width="40" height="40" viewBox="2.8 -3.1 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g fill="darkblue" font-family="monospace" font-size="9.5" font-weight="700" text-anchor="middle">
-                  <!-- Top (horizontal) -->
-                  <text x="17.5" y="7" transform="rotate(90 20 7)">s</text>
-                  <!-- Top-right (135°) -->
-                  <text x="29" y="15" transform="rotate(135 31 11)">s</text>
-                  <!-- Right (vertical) -->
-                  <text x="36" y="20">s</text>
-                  <!-- Bottom-right (225°) -->
-                  <text x="32" y="33.5" transform="rotate(225 31 29)">s</text>
-                  <!-- Bottom (horizontal) -->
-                  <text x="18" y="33" transform="rotate(90 20 33)">s</text>
-                  <!-- Bottom-left (315°) -->
-                  <text x="14" y="33" transform="rotate(315 9 29)">s</text>
-                  <!-- Left (vertical) -->
-                  <text x="9.5" y="20">s</text>
-                  <!-- Top-left (45°) -->
-                  <text x="10.5" y="8.5" transform="rotate(45 9 11)">s</text>
-                  <!-- Inner ring -->
-                  <text x="18" y="13.5" transform="rotate(90 20 13.5)">s</text>
-                  <text x="29" y="20">s</text>
-                  <text x="17.5" y="26.5" transform="rotate(90 20 26.5)">s</text>
-                  <text x="16.5" y="20">s</text>
-                </g>
-              </svg>
+      <div class="header-fixed-row flex items-center w-full min-h-[80px]">
+        
+        <!-- Left: Logo/Brand -->
+        <NuxtLink to="/" class="brand mr-8 flex items-center">
+          <span class="logo-svg">
+            <span class="logo-rotate">
+              <span class="logo-pulse-fade">
+                <svg width="40" height="40" viewBox="2.8 -3.1 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="darkblue" font-family="monospace" font-size="9.5" font-weight="700" text-anchor="middle">
+                    <!-- Top (horizontal) -->
+                    <text x="17.5" y="7" transform="rotate(90 20 7)">s</text>
+                    <!-- Top-right (135°) -->
+                    <text x="29" y="15" transform="rotate(135 31 11)">s</text>
+                    <!-- Right (vertical) -->
+                    <text x="36" y="19">s</text>
+                    <!-- Bottom-right (225°) -->
+                    <text x="32" y="33.5" transform="rotate(225 31 29)">s</text>
+                    <!-- Bottom (horizontal) -->
+                    <text x="18" y="33" transform="rotate(90 20 33)">s</text>
+                    <!-- Bottom-left (315°) -->
+                    <text x="14" y="33" transform="rotate(315 9 29)">s</text>
+                    <!-- Left (vertical) -->
+                    <text x="9.5" y="19">s</text>
+                    <!-- Top-left (45°) -->
+                    <text x="10.5" y="8.5" transform="rotate(45 9 11)">s</text>
+                    <!-- Inner ring -->
+                    <text x="18" y="13.5" transform="rotate(90 20 13.5)">s</text>
+                    <text x="29" y="19">s</text>
+                    <text x="17.5" y="26.5" transform="rotate(90 20 26.5)">s</text>
+                    <text x="16.5" y="19">s</text>
+                  </g>
+                </svg>
+              </span>
             </span>
           </span>
-        </span>
-        <span class="brand-text">seatre</span>
-      </NuxtLink>
-      <UContainer>
-        <UNavigationMenu :items="items" content-orientation="vertical"/>
-      </UContainer>
-      <div class="flex items-center gap-3">
-        <button
-          type="button"
-          class="theme-toggle-btn"
-          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-          @click="toggleColorMode"
-        >
-          <span v-if="!isDark">🌙</span><span v-else>☀️</span>
+          <span class="brand-text ml-2">sea<span style="color: seagreen">tre</span></span>
+        </NuxtLink>
+
+        <!-- Desktop nav: fills the rest of the row, hidden on mobile and narrow window -->
+        <div class="flex-1 min-w-0 desktop-nav">
+          <UNavigationMenu 
+            :items="items" 
+            orientation="horizontal" 
+            content-orientation="vertical" 
+            :ui="{
+              item: 'mx-3',
+              link: 'px-2 font-extrabold text-xs text-[darkblue]'
+            }"
+            class="px-2"
+          >
+            <template #separator>
+              <span style="display:inline-block; width:2rem;"></span>
+            </template>
+            <template #theme-toggle>
+              <button
+                type="button"
+                class="theme-toggle-btn"
+                :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+                @click="toggleColorMode"
+              >
+                <span v-if="!isDark">🌙</span><span v-else>☀️</span>
+              </button>
+            </template>
+          </UNavigationMenu>
+        </div>
+
+        <!-- Hamburger button for nav: only visible on mobile and narrow window -->
+        <button @click="showVerticalMenu = !showVerticalMenu" class="hamburger-btn ml-auto p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Open menu">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
         </button>
-        <NuxtLink to="/login" class="login-link">Login</NuxtLink>
+      </div>
+
+      <!-- Vertical nav for mobile and narrow window: only visible when toggled -->
+      <div v-if="showVerticalMenu" class="flex-1 min-w-0 vertical-nav">
+        <UNavigationMenu
+          :items="verticalNavItems"
+          orientation="vertical"
+          content-orientation="vertical"
+          type="single"
+          popover="{ mode: 'hover' }"
+          class="px-4 py-4"
+          :ui="{
+            link: 'block py-2 px-4 text-base font-bold text-[darkblue] text-left'
+          }"
+        />
       </div>
     </div>
   </header>
@@ -60,6 +100,33 @@ const isDark = computed(() => colorMode.value === 'dark')
 function toggleColorMode () {
   colorMode.preference = isDark.value ? 'light' : 'dark'
 }
+const showVerticalMenu = ref(false)
+const navMenuClass = ref(getNavMenuClass())
+function getNavMenuClass() {
+  if (typeof window !== 'undefined') {
+    if (window.innerWidth < 1270) {
+      return 'px-1 font-extrabold text-base text-[darkblue]';
+    } else if (window.innerWidth < 1330) {
+      return 'px-1 font-extrabold text-xs text-[darkblue]';
+    } else {
+      return 'px-1 font-extrabold text-sm text-[darkblue]';
+    }
+  }
+  return 'px-1 font-extrabold text-sm text-[darkblue]';
+}
+function updateNavMenuClass() {
+  navMenuClass.value = getNavMenuClass();
+  if (typeof window !== 'undefined' && window.innerWidth > 1270) {
+    showVerticalMenu.value = false;
+  }
+}
+onMounted(() => {
+  window.addEventListener('resize', updateNavMenuClass)
+  updateNavMenuClass()
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', updateNavMenuClass)
+})
 const items = ref([
   {
     label: 'Take Climate Action',
@@ -68,7 +135,8 @@ const items = ref([
       { label: 'Our Community', disabled: true },
       { label: 'Restorative Coalition', icon: 'i-lucide:smile', to: '/coalition', class: 'pl-8' }, // indentation
       { label: 'treeferral Program', icon: 'i-lucide:smile', to: '/treeferral', class: 'pl-8' } // indentation
-    ]
+    ],
+    class: navMenuClass
   },
   {
     label: 'Why seatre',
@@ -77,14 +145,16 @@ const items = ref([
       { label: 'Our Technology', icon: 'i-lucide:smile', to: '/technology' },
       { label: 'Measurable Impact', icon: 'i-lucide:smile', to: '/impact' },
       { label: 'Marketable Content', icon: 'i-lucide:smile', to: '/content' }
-    ]
+    ],
+    class: navMenuClass
   },
   {
     label: 'Case Studies',
     children: [
       { label: 'From the ground', icon: 'i-lucide:smile', to: '/from-the-ground' },
       { label: 'Business highlights', icon: 'i-lucide:smile', to: '/business-highlights' },
-    ]
+    ],
+    class: navMenuClass
   },  
   {
     label: 'Get Involved',
@@ -92,7 +162,8 @@ const items = ref([
       { label: 'Join Us', icon: 'i-lucide:smile', to: '/join' },
       { label: 'Volunteer', icon: 'i-lucide:smile', to: '/volunteer' },
       { label: 'Donate', icon: 'i-lucide:smile', to: '/donate' }
-    ]
+    ],
+    class: navMenuClass
   },  
   {
     label: 'About Us',
@@ -100,15 +171,35 @@ const items = ref([
       { label: 'Our Story', icon: 'i-lucide:smile', to: '/our-story' },
       { label: 'Resources', icon: 'i-lucide:smile',  to: '/resources' },
       { label: 'Impact', icon: 'i-lucide:smile', to: '/impact' }
-    ]
+    ],
+    class: navMenuClass
   },
   {
-    label: 'GitHub',
-    icon: 'i-simple-icons-github',
-    to: 'https://github.com/nuxt/ui',
-    target: '_blank'
-  }
+    slot: 'separator'
+  },  
+  {
+    label: 'Blog',
+    to: "/blog",
+    class: navMenuClass
+  },
+  {
+    label: 'Login',
+    to: "/login",
+    class: navMenuClass
+  },
+  { slot: 'theme-toggle' }
+  // {
+  //   label: 'GitHub',
+  //   icon: 'i-simple-icons-github',
+  //   to: 'https://github.com/nuxt/ui',
+  //   target: '_blank',
+  //   class: navMenuClass
+  // }
 ])
+
+const verticalNavItems = computed(() =>
+  items.value.filter(item => item.slot !== 'separator')
+)
 </script>
 
 <style scoped>
@@ -130,5 +221,18 @@ const items = ref([
   0% { transform: scale(1); opacity:1; }
   12% { transform: scale(1.15); opacity:.5; }
   100% { transform: scale(1); opacity:1; }
+}
+@media (max-width: 1270px) {
+  .desktop-nav {
+    display: none;
+  }
+}
+@media (min-width: 1270px) {
+  .hamburger-btn {
+    display: none;
+  }
+  .vertical-nav {
+    display: none;
+  }
 }
 </style>

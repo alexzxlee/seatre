@@ -2,6 +2,71 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* Mobile vertical nav: fix alignment for accordion triggers only */
+.vertical-nav [id^="reka-accordion-trigger"] {
+  display: flex;
+  align-items: center;
+}
+
+/* Keep logo/brand and right-side buttons fixed at 8rem from top */
+.header-fixed-row {
+  position: flex;
+  top: 2.5rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3500;
+  pointer-events: auto;
+  padding-right: 0rem;
+  padding-left: 5.5rem;
+}
+
+@media (max-width: 1500px) {
+  .header-fixed-row {
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 1475px) {
+  .header-fixed-row {
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 1425px) {
+  .header-fixed-row {
+    padding-right: 3.5rem;
+  }
+}
+
+@media (max-width: 1325px) {
+  .header-fixed-row {
+    padding-right: 4rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .header-fixed-row {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-fixed-row {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.header-fixed-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* Theme variables: CSS Variables for light & dark themes */
 :root {
   --color-main: darkblue;
@@ -25,12 +90,10 @@
 body {
   background: var(--color-bg);
   color: var(--color-fg);
-  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin: 0;
 }
 
-a { color: var(--color-main); text-decoration: none; }
-a:hover { text-decoration: none; }
+a:hover { color: seagreen; }
 
 /* Dropdown override to ensure it floats above hero video */
 .dropdown-menu,
@@ -41,18 +104,18 @@ a:hover { text-decoration: none; }
 /* Header layout */
 .site-header {
   position: fixed;
-  inset: 0 0 auto 0;
+  inset: 0 0 auto 0; /* auto here expands header to full height */
   width: 100vw;
   z-index: 3000;
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(10px);
-  padding: 0 7.5rem; /* Add this line for left/right space */
+  /* padding: 0 7.5rem; Add this line for left/right space */
 }
 .site-header::before {
   content:'';
   position:absolute; 
   inset:0 0 0 0;
-  background:linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),url('/seatre_2.jpg') center/cover no-repeat;
+  background:linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),url('/images/seatre_2.jpg') top/cover no-repeat;
   opacity:.9; 
   pointer-events:none; 
   z-index:-1;
@@ -66,10 +129,12 @@ a:hover { text-decoration: none; }
 }
 .header-inner {
   max-width: 1400px;
-  margin: 0 auto;
-  height: 120px;
-  display: flex;
-  align-items: center;
+  margin: 0 0;
+  position: relative;
+  min-height: 6.5rem;
+  /* Remove flex so nav can expand vertically without pushing logo/buttons */
+  /* display: flex; */
+  /* align-items: center; */
   gap: 2rem;
 }
 .brand {
@@ -208,3 +273,18 @@ button[data-navigation-menu-trigger] {
 
 /* (Optional) give all buttons a pointer just in case */
 /* button { cursor: pointer; } */
+
+.impact-bg {
+  position: relative;
+  background: url('/images/seatre_3.jpg') 50% 14%/cover no-repeat;
+  /* Optional: add similar opacity or effects as header if needed */
+}
+
+/* For the hover issue of nav items: inside elements with data-menu-item, 
+all <a> links and <button> buttons should have their ::before pseudo-elements 
+without background color and without box shadow. */
+[data-menu-item] a::before,
+[data-menu-item] button::before {
+  background: transparent !important;
+  box-shadow: none !important;
+}
