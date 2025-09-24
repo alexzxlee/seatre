@@ -1,20 +1,88 @@
 <template>
-  <footer>
-    <p>&copy; 2025 Your E-commerce Website</p>
+  <footer class="bg-[#101722] text-white py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-0 w-full min-w-0">
+        <!-- B Corp block and commitment text, no Certified/Corporation -->
+        <div class="flex flex-row items-center justify-center w-full lg:w-1/2 min-h-[180px] mb-10 lg:mb-0">
+          <div class="flex-shrink-0 flex items-center justify-center md:justify-end w-full md:w-[35%] max-w-[200px] h-full sm:ml-34 ml-34">
+            <img src="/bcorporation.png" alt="B Corp" class="w-48 h-80 filter invert brightness-200" style="object-fit:contain;max-width:180px;" />
+          </div>
+          <div class="flex flex-col justify-center md:items-start h-full md:ml-4 w-full md:w-[65%] max-w-[600px] sm:ml-8 mr-36">
+            <br><br><div class="font-bold text-2xl sm:text-2xl md:text-2xl leading-snug mb-2 w-[360px] max-w-[360px] whitespace-pre-line" id="commitment-text" style="margin-top:0;">
+              This company is committed to<br>
+              accountability, transparency,<br>
+              and continuous improvement.
+            </div><br><br>
+            <div class="border-t-10 border-white mt-2 mb-2 w-full"></div>
+          </div>
+        </div>
+        <!-- Links block responsive -->
+        <div class="w-full flex flex-col justify-center items-center mx-auto mt-10 lg:w-[75%] lg:ml-14">
+          <div class="grid grid-cols-4 gap-8">
+            <div>
+              <div class="font-bold my-3 pb-2 text-base">Learn More</div>
+              <ul class="space-y-5 text-sm">
+                <li><NuxtLink to="/faq">FAQ</NuxtLink></li>
+                <li><NuxtLink to="/resources">Resources</NuxtLink></li>
+                <li><NuxtLink to="/blog">Blog</NuxtLink></li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-bold my-3 pb-2 text-base">Company</div>
+              <ul class="space-y-5 text-sm">
+                <li><NuxtLink to="/about-veritree">About veritree</NuxtLink></li>
+                <li><NuxtLink to="/careers">Careers</NuxtLink></li>
+                <li><NuxtLink to="/contact">Contact</NuxtLink></li>
+                <li><NuxtLink to="/login">Login</NuxtLink></li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-bold my-3 pb-2 text-base">Partners</div>
+              <ul class="space-y-5 text-sm">
+                <li><NuxtLink to="/how-it-works">How it Works</NuxtLink></li>
+                <li><NuxtLink to="/explore-projects">Explore Projects</NuxtLink></li>
+                <li><NuxtLink to="/case-studies">Case Studies</NuxtLink></li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-bold my-3 pb-2 text-base">Connect</div>
+              <ul class="space-y-5 text-sm">
+                <li>
+                  <a href="https://linkedin.com" target="_blank" class="flex items-center gap-2">
+                    <Icon name="lucide:linkedin" class="w-5 h-5" /> LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a href="https://instagram.com" target="_blank" class="flex items-center gap-2">
+                    <Icon name="lucide:instagram" class="w-5 h-5" /> Instagram
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com" target="_blank" class="flex items-center gap-2">
+                    <Icon name="lucide:facebook" class="w-5 h-5" /> Facebook
+                  </a>
+                </li>
+                <li>
+                  <a href="https://youtube.com" target="_blank" class="flex items-center gap-2">
+                    <Icon name="lucide:youtube" class="w-5 h-5" /> YouTube
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-slate-700 mt-10 pt-6">
+        <p class="text-center text-xs text-slate-400">&copy; 2025 seatre. All rights reserved.</p>
+        </div>
+        <div class="flex justify-center gap-4 mt-2 mb-15">
+         <NuxtLink to="/privacy-policy" class="text-xs text-blue-500">Privacy Policy</NuxtLink>
+         <NuxtLink to="/terms-of-service" class="text-xs text-blue-500">Terms of Service</NuxtLink>
+        </div>
+    </div>
   </footer>
 </template>
 
 <script setup>
+// No script needed for static footer
 </script>
-
-<style scoped>
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-</style>

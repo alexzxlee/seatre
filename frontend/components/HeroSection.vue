@@ -19,10 +19,19 @@
         <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18" /></svg>
       </button>
     </div>
-    <div class="hero-overlay">
-      <h1>Remove a ton of plastics.<br>Clean Ocean.</h1>
-      <p>When you sign up for our newsletter, we'll remove a verified ton of plastic.</p>
-      <button class="hero-btn">Sign Up Now</button>
+    <div class="hero-overlay px-60">
+      <template v-if="current === 0">
+        <h1>Remove a ton of plastics.<br>Clean Ocean.</h1>
+        <p>When you sign up for our newsletter, we'll remove a verified ton of plastic.</p>
+        <NuxtLink to="/sign-up-now" class="hero-btn inline-flex items-center gap-2">
+          Sign Up Now <Icon name="lucide:arrow-right" size="1.2em" />
+        </NuxtLink>
+      </template>
+      <template v-else-if="current === 1">
+        <h1>Sustainability Projects<br>You Can Trust</h1>
+        <p>We don't just clean oceans. We manage, monitor, measure and report on them.</p>
+        <button class="hero-btn inline-flex items-center gap-2">Explore Projects <span class="i-lucide:arrow-right size-4"></span></button>
+      </template>
     </div>
   </section>
 </template>
@@ -30,8 +39,8 @@
 <script setup>
 import { ref } from 'vue'
 const videos = [
-  'ocean1.mp4',
-  'ocean2.mp4',
+  'videos/ocean_2.mp4',
+  'videos/ocean_1.mp4',
   // Add more video filenames as needed
 ]
 const current = ref(0)
