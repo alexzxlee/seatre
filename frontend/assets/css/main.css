@@ -14,6 +14,7 @@
   top: 2.5rem;
   left: 0;
   width: 100%;
+  min-height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -280,11 +281,17 @@ button[data-navigation-menu-trigger] {
   /* Optional: add similar opacity or effects as header if needed */
 }
 
-/* For the hover issue of nav items: inside elements with data-menu-item, 
+/* For the hover issue of desktop nav items: inside elements with data-menu-item, 
 all <a> links and <button> buttons should have their ::before pseudo-elements 
 without background color and without box shadow. */
 [data-menu-item] a::before,
 [data-menu-item] button::before {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+/* For the hover issue of vertical (mobile) nav items. */
+[data-v-a81738bd] a::before,
+[data-v-a81738bd] button::before {
   background: transparent !important;
   box-shadow: none !important;
 }

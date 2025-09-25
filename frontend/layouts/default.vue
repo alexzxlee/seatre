@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <main class="pt-24">
+    <main class="pt-26">
       <NuxtPage />  <!-- This will render the content of the current page, such as index.vue -->
     </main>
     <Footer />

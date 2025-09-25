@@ -1,7 +1,7 @@
 <template>
   <header class="site-header pt-6">
     <div class="header-inner">
-      <div class="header-fixed-row flex items-center w-full min-h-[80px]">
+      <div class="header-fixed-row">
         
         <!-- Left: Logo/Brand -->
         <NuxtLink to="/" class="brand mr-8 flex items-center">
@@ -61,7 +61,8 @@
                 :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
                 @click="toggleColorMode"
               >
-                <span v-if="!isDark">🌙</span><span v-else>☀️</span>
+                <span v-if="!isDark">🌙</span>
+                <span v-else>☀️</span>
               </button>
             </template>
           </UNavigationMenu>
