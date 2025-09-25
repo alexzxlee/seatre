@@ -76,18 +76,21 @@
       </div>
 
       <!-- Vertical nav for mobile and narrow window: only visible when toggled -->
-      <div v-if="showVerticalMenu" class="flex-1 min-w-0 vertical-nav">
+      <!-- Only both :collapsed=false :collapsed="false" are working (key is :) -->
+      <!-- <div v-if="showVerticalMenu" class="flex-1 min-w-0 vertical-nav">
         <UNavigationMenu
           :items="verticalNavItems"
           orientation="vertical"
-          content-orientation="vertical"
           type="single"
-          popover="{ mode: 'hover' }"
+          collapsible
           class="px-4 py-4"
           :ui="{
             link: 'block py-2 px-4 text-base font-bold text-[darkblue] text-left'
           }"
         />
+      </div> -->
+      <div v-if="showVerticalMenu" class="flex-1 min-w-0 vertical-nav">
+        <VerticalHoverNav :items="verticalNavItems" />
       </div>
     </div>
   </header>
@@ -197,6 +200,7 @@ const items = ref([
   // }
 ])
 
+import VerticalHoverNav from './VerticalHoverNav.vue'
 const verticalNavItems = computed(() =>
   items.value.filter(item => item.slot !== 'separator')
 )
