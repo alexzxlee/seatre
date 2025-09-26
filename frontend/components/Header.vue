@@ -68,18 +68,24 @@
           </UNavigationMenu>
         </div>
 
-        <!-- Hamburger button for nav: only visible on mobile and narrow window -->
-        <button @click="showVerticalMenu = !showVerticalMenu" class="hamburger-btn ml-auto p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Open menu">
-          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+        <!-- Hamburger/Close button for nav: only visible on mobile and narrow window -->
+        <button @click="showVerticalMenu = !showVerticalMenu" 
+          class="hamburger-btn ml-auto p-2 text-[darkblue] cursor-pointer" 
+          :aria-label="showVerticalMenu ? 'Close menu' : 'Open menu'"
+          >
+          <template v-if="!showVerticalMenu">
+            <Icon name="lucide:menu" class="w-8 h-8" aria-hidden="true" />
+          </template>
+          <template v-else>
+            <Icon name="lucide:x" class="w-8 h-8 text-[seagreen]" aria-hidden="true" />
+          </template>
         </button>
       </div>
 
       <!-- Vertical nav for mobile and narrow window: only visible when toggled -->
       <!-- Only both :collapsed=false :collapsed="false" are working (key is :) -->
-      <!-- <div v-if="showVerticalMenu" class="flex-1 min-w-0 vertical-nav">
-        <UNavigationMenu
+      <div v-if="showVerticalMenu" class="flex-1 min-w-0 vertical-nav">
+        <!-- <UNavigationMenu
           :items="verticalNavItems"
           orientation="vertical"
           type="single"
@@ -88,9 +94,7 @@
           :ui="{
             link: 'block py-2 px-4 text-base font-bold text-[darkblue] text-left'
           }"
-        />
-      </div> -->
-      <div v-if="showVerticalMenu" class="flex-1 min-w-0 vertical-nav">
+        /> -->
         <VerticalHoverNav :items="verticalNavItems" />
       </div>
     </div>
@@ -98,7 +102,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 const colorMode = useColorMode()
 const isDark = computed(() => colorMode.value === 'dark')
 function toggleColorMode () {
@@ -109,7 +113,7 @@ const navMenuClass = ref(getNavMenuClass())
 function getNavMenuClass() {
   if (typeof window !== 'undefined') {
     if (window.innerWidth < 1270) {
-      return 'px-1 font-extrabold text-base text-[darkblue]';
+      return 'px-1 font-extrabold text-sm text-[darkblue]';
     } else if (window.innerWidth < 1330) {
       return 'px-1 font-extrabold text-xs text-[darkblue]';
     } else {
@@ -128,7 +132,7 @@ onMounted(() => {
   window.addEventListener('resize', updateNavMenuClass)
   updateNavMenuClass()
 })
-onUnmounted(() => {
+onBeforeUnmount(() => {
   window.removeEventListener('resize', updateNavMenuClass)
 })
 const items = ref([
