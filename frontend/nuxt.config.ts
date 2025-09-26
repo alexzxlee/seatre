@@ -20,7 +20,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.API_BASE || '/api'
+      // Prefer NUXT_PUBLIC_API_BASE when provided, fallback to API_BASE, then '/api'
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || process.env.API_BASE || '/api'
     }
   },
   vite: {

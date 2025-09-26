@@ -2,7 +2,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Protect specific paths or use to.meta.requiresAuth
   if (to.path.startsWith('/dashboard')) {
     try {
-      await $fetch('/api/auth/me', { credentials: 'include' })
+      const apiFetch = useApiFetch()
+      await apiFetch('/auth/me')
     } catch {
       return navigateTo('/login')
     }

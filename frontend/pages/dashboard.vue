@@ -12,7 +12,11 @@
 </template>
 
 <script setup>
-const { data, pending, error } = await useFetch('/api/auth/me', { credentials: 'include' });
+const apiBase = useApiBase()
+const { data, pending, error } = await useFetch('/auth/me', {
+	baseURL: apiBase,
+	credentials: 'include'
+});
 const user = computed(() => data.value);
 
 if (!pending.value && error.value) {
@@ -21,7 +25,8 @@ if (!pending.value && error.value) {
 
 const logout = async () => {
 	try {
-		await $fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+		const apiFetch = useApiFetch()
+		await apiFetch('/auth/logout', { method: 'POST' });
 		await navigateTo('/login');
 	} catch (err) {
 		console.error('Logout failed:', err);

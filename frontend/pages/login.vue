@@ -15,29 +15,29 @@
 </template>
 
 <script setup>
-const email = ref('');
-const password = ref('');
-const error = ref(null);
-const loading = ref(false);
+const email = ref('')
+const password = ref('')
+const error = ref<string | null>(null)
+const loading = ref(false)
+const apiFetch = useApiFetch()
 
 const login = async () => {
-	error.value = null;
-	loading.value = true;
-	try {
-		await $fetch('/api/auth/login', {
-			method: 'POST',
-			body: { email: email.value, password: password.value },
-			credentials: 'include'
-		});
-		await navigateTo('/dashboard');
-	} catch (err) {
-		console.error('Login failed:', err);
-		error.value = 'Login failed: ' + (err.data?.statusMessage || 'Unknown error');
-		password.value = '';
-	} finally {
-		loading.value = false;
-	}
-};
+  error.value = null
+  loading.value = true
+  try {
+    await apiFetch('/auth/login', {
+      method: 'POST',
+      body: { email: email.value, password: password.value }
+    })
+    await navigateTo('/dashboard')
+  } catch (err) {
+    console.error('Login failed:', err)
+    error.value = 'Login failed: ' + (err?.data?.statusMessage || err?.message || 'Unknown error')
+    password.value = ''
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <style scoped>
