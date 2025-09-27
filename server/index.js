@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { consola } from 'consola'
-import sequelize from './sequelize.js'
+import sequelize, { testConnection } from './sequelize.js'
 import authRouter from './routes/auth.js'
 
 // Temporary DB connectivity check (remove after verifying in cPanel logs)
