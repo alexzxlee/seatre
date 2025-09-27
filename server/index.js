@@ -6,11 +6,14 @@ import { consola } from 'consola'
 import sequelize from './sequelize.js'
 import authRouter from './routes/auth.js'
 
+// Temporary DB connectivity check (remove after verifying in cPanel logs)
+testConnection()
+
 const app = express()
 const PORT = process.env.PORT || 3001
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
-app.use(cors({ origin: FRONTEND_URL, credentials: true }))
+app.use(cors({ origin: FRONTEND_URL, credentials: true })) // exact domain with protocol
 app.use(express.json())
 app.use(cookieParser())
 

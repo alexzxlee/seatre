@@ -14,4 +14,14 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   logging: false
 })
 
+// Temporary DB connectivity check (remove after verifying in cPanel logs)
+export async function testConnection() {
+  try {
+    await sequelize.authenticate()
+    console.log('Database connection established.')
+  } catch (err) {
+    console.error('Unable to connect to DB:', err)
+  }
+}
+
 export default sequelize
