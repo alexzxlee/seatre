@@ -1,0 +1,12 @@
+---
+deployment:
+ tasks:
+ # Define deployment root (monorepo)
+ - export DEPLOY_PATH=/home/sdjh7328/public_html
+ # Backend install (only production deps)
+ - /bin/bash -lc "cd $DEPLOY_PATH/server && npm ci"
+ # Frontend install + build
+ - /bin/bash -lc "cd $DEPLOY_PATH/frontend && npm ci && npm run build"
+ # Touch restart files (Passenger/Node apps) if needed – harmless if tmp exists or not; otherwise use the UI Restart.
+ - /bin/bash -lc "mkdir -p $DEPLOY_PATH/frontend/tmp && touch $DEPLOY_PATH/frontend/tmp/restart.txt || true"
+ - /bin/bash -lc "mkdir -p $DEPLOY_PATH/server/tmp && touch $DEPLOY_PATH/server/tmp/restart.txt || true"
