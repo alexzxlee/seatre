@@ -52,9 +52,9 @@
             class="px-2"
           >
             <template #separator>
-              <span style="display:inline-block; width:2rem;"></span>
+              <span style="display:inline-block; width:1.2rem;"></span>
             </template>
-            <template #theme-toggle>
+            <!-- <template #theme-toggle>
               <button
                 type="button"
                 class="theme-toggle-btn"
@@ -64,9 +64,13 @@
                 <span v-if="!isDark">🌙</span>
                 <span v-else>☀️</span>
               </button>
-            </template>
+            </template> -->
           </UNavigationMenu>
-        </div>
+        </div>  
+
+        <NuxtLink to="/contact-us" class="contact-btn inline-flex items-center gap-2">
+          Contact Us <Icon name="lucide:arrow-right" size="1.2em" />
+        </NuxtLink>
 
         <!-- Hamburger/Close button for nav: only visible on mobile and narrow window -->
         <button @click="showVerticalMenu = !showVerticalMenu" 
@@ -112,9 +116,9 @@ const showVerticalMenu = ref(false)
 const navMenuClass = ref(getNavMenuClass())
 function getNavMenuClass() {
   if (typeof window !== 'undefined') {
-    if (window.innerWidth < 1270) {
+    if (window.innerWidth < 1340) {
       return 'px-1 font-extrabold text-sm text-[darkblue]';
-    } else if (window.innerWidth < 1330) {
+    } else if (window.innerWidth < 1435) {
       return 'px-1 font-extrabold text-xs text-[darkblue]';
     } else {
       return 'px-1 font-extrabold text-sm text-[darkblue]';
@@ -124,7 +128,7 @@ function getNavMenuClass() {
 }
 function updateNavMenuClass() {
   navMenuClass.value = getNavMenuClass();
-  if (typeof window !== 'undefined' && window.innerWidth > 1270) {
+  if (typeof window !== 'undefined' && window.innerWidth > 1340) {
     showVerticalMenu.value = false;
   }
 }
@@ -195,7 +199,7 @@ const items = ref([
     to: "/login",
     class: navMenuClass
   },
-  { slot: 'theme-toggle' }
+  // { slot: 'theme-toggle' }
   // {
   //   label: 'GitHub',
   //   icon: 'i-simple-icons-github',
@@ -206,9 +210,18 @@ const items = ref([
 ])
 
 import VerticalHoverNav from './VerticalHoverNav.vue'
-const verticalNavItems = computed(() =>
-  items.value.filter(item => item.slot !== 'separator')
-)
+const verticalNavItems = computed(() => {
+  const filtered = items.value.filter(item => item.slot !== 'separator');
+  if (typeof window !== 'undefined' && window.innerWidth < 1340 && showVerticalMenu.value) {
+    filtered.push({
+      label: 'Contact Us',
+      to: '/contact-us',
+      class: 'contact-btn inline-flex items-center gap-2',
+      icon: 'lucide:arrow-right'
+    });
+  }
+  return filtered;
+});
 </script>
 
 <style scoped>
@@ -231,12 +244,15 @@ const verticalNavItems = computed(() =>
   12% { transform: scale(1.15); opacity:.5; }
   100% { transform: scale(1); opacity:1; }
 }
-@media (max-width: 1270px) {
+@media (max-width: 1340px) {
   .desktop-nav {
     display: none;
   }
+  .contact-btn {
+    display: none;
+  }
 }
-@media (min-width: 1270px) {
+@media (min-width: 1340px) {
   .hamburger-btn {
     display: none;
   }
@@ -244,4 +260,50 @@ const verticalNavItems = computed(() =>
     display: none;
   }
 }
+.contact-btn {
+  pointer-events: auto;
+  background: #0a6cff;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0003;
+  transition: background 0.2s;
+}
+.contact-btn:hover {
+  background: seagreen;
+}
+
+/* Force darkblue for all text in desktop nav */
+.desktop-nav :deep(*) {
+  color: darkblue !important;
+}
+/* Force gray for icons of subitems in desktop nav */
+.desktop-nav :deep([class*="icon"]):not(.i-lucide\:chevron-down):not(.i-lucide\:chevron-up):not([class*="i-lucide:chevron-down"]):not([class*="i-lucide:chevron-up"]),
+.desktop-nav :deep(.icon):not(.i-lucide\:chevron-down):not(.i-lucide\:chevron-up):not([class*="i-lucide:chevron-down"]):not([class*="i-lucide:chevron-up"]) {
+  color: gray !important;
+}
+/* Force hover darkblue for icons of subitems in desktop nav */
+.desktop-nav :deep(a:hover [class*="icon"]):not(.i-lucide\:chevron-down):not(.i-lucide\:chevron-up):not([class*="i-lucide:chevron-down"]):not([class*="i-lucide:chevron-up"]),
+.desktop-nav :deep(a:hover .icon):not(.i-lucide\:chevron-down):not(.i-lucide\:chevron-up):not([class*="i-lucide:chevron-down"]):not([class*="i-lucide:chevron-up"]) {
+  color: darkblue !important;
+}
+/* Force hover seagreen for subitems in desktop nav */
+.desktop-nav :deep(a:hover p) {
+  color: seagreen !important;
+}
+
+/* Custom background for UNavigationMenu popup subitems */
+.desktop-nav :deep(.bg-default) {
+  background:
+    linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
+    url('/images/seatre_15.png') top/cover no-repeat;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
 </style>

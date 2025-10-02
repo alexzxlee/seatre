@@ -7,8 +7,8 @@
           <div class="flex-shrink-0 flex items-center justify-center md:justify-end w-full md:w-[35%] max-w-[200px] h-full sm:ml-34 ml-34">
             <img src="/bcorporation.png" alt="B Corp" class="w-48 h-80 filter invert brightness-200" style="object-fit:contain;max-width:180px;" />
           </div>
-          <div class="flex flex-col justify-center md:items-start h-full md:ml-4 w-full md:w-[65%] max-w-[600px] sm:ml-8 mr-36">
-            <br><br><div class="font-bold text-2xl sm:text-2xl md:text-2xl leading-snug mb-2 w-[360px] max-w-[360px] whitespace-pre-line" id="commitment-text" style="margin-top:0;">
+          <div class="flex flex-col justify-center md:items-start h-full md:ml-4 w-full md:w-[65%] md:pl-4 md:pr-4 max-w-[600px] sm:ml-8 mr-36">
+            <br><br><div class="font-bold text-2xl sm:text-2xl md:text-2xl leading-snug mb-2 w-[360px] max-w-[360px] whitespace-pre-line bcorp-text" id="commitment-text" style="margin-top:0;">
               This company is committed to<br>
               accountability, transparency,<br>
               and continuous improvement.
@@ -86,3 +86,13 @@
 <script setup>
 // No script needed for static footer
 </script>
+
+<style scoped>
+@media (max-width: 640px) and (min-width: 500px) {
+  .bcorp-text {
+    font-size: 1.25rem; /* Adjust font size for small screens */
+    width: 290px;
+    line-height: 1.65; /* Relative line height (recommended) */
+  }
+}
+</style>

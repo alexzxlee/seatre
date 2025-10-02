@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   },
   // Minimal @nuxt/ui config (colors can be customized via CSS variables or tailwind theme if needed)
   colorMode: {
-    preference: 'system', // default preference
+    preference: 'light', // default preference 'system'
     fallback: 'light', // if system preference cannot be determined
     classSuffix: '' // use 'dark' class instead of 'dark-mode'
   },

@@ -18,7 +18,7 @@
             <div class="impact-number">{{ hectaresDisplay }}</div>
           </div>
           <div class="text-3xl md:text-4xl font-extrabold mt-4 mb-2 impact-title">Kilograms Collected</div>
-          <div class="text-base text-slate-700 impact-desc">Total plastic and marine debris removed from the ocean-equivalent to thousands of bottles and bags.</div>
+          <div class="text-base impact-desc">Total plastic and marine debris removed from the ocean-equivalent to thousands of bottles and bags.</div>
         </div>
         <!-- Species Identified -->
         <div class="flex flex-col items-start">
@@ -31,7 +31,7 @@
             <div class="impact-number">{{ speciesDisplay }}</div>
           </div>
           <div class="text-3xl md:text-4xl font-extrabold mt-4 mb-2 impact-title">Biodiversity Monitored</div>
-          <div class="text-base text-slate-700 impact-desc">Tracking the presence and health of marine life in cleaned areas.</div>
+          <div class="text-base impact-desc">Tracking the presence and health of marine life in cleaned areas.</div>
         </div>
         <!-- Evidence Uploaded -->
         <div class="flex flex-col items-start">
@@ -44,7 +44,7 @@
             <div class="impact-number">{{ evidenceDisplay }}</div>
           </div>
           <div class="text-3xl md:text-4xl font-extrabold mt-4 mb-2 impact-title">Hotspots Mapped</div>
-          <div class="text-base text-slate-700 impact-desc">On-the-water cleanups verified with images, GPS tracks, and satellite imagery.</div>
+          <div class="text-base impact-desc">On-the-water cleanups verified with images, GPS tracks, and satellite imagery.</div>
         </div>
       </div>
       <div class="flex justify-center mt-6">
@@ -251,7 +251,7 @@ onBeforeUnmount(() => {
 }
 .impact-desc {
   margin-left: 0;
-  color: #374151;
+  color: black;
 }
 .explore-btn {
   pointer-events: auto;
