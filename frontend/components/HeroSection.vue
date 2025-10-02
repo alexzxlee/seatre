@@ -18,6 +18,17 @@
       <button class="arrow right" @click="nextVideo">
         <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18" /></svg>
       </button>
+      
+      <!-- Carousel indicators for narrow screens -->
+      <div class="carousel-indicators">
+        <button 
+          v-for="(video, idx) in videos" 
+          :key="`indicator-${idx}`"
+          class="carousel-indicator"
+          :class="{ active: current === idx }"
+          @click="current = idx"
+        ></button>
+      </div>
     </div>
     <div class="hero-overlay px-60">
       <template v-if="current === 0">
@@ -84,8 +95,8 @@ const nextVideo = () => {
   aspect-ratio: 16/9;
 }
 .arrow {
-position: absolute;
-top: 50%;
+  position: absolute;
+  top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
@@ -113,10 +124,39 @@ top: 50%;
   height: 48px;
   stroke: #fff;
   stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-    display: block;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  display: block;
+}
+
+/* Carousel indicators */
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 12px;
+  z-index: 3;
+}
+
+.carousel-indicator {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.carousel-indicator.active {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.carousel-indicator:hover {
+  background: rgba(255, 255, 255, 0.7);
 }
 .hero-overlay {
   position: relative;
@@ -156,5 +196,53 @@ top: 50%;
 }
 .hero-btn:hover {
   background: seagreen;
+}
+
+@media (max-width: 1150px) {
+  .hero-overlay {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
+}
+@media (max-width: 1000px) {
+  .hero-overlay {
+    padding-left: 9rem;
+    padding-right: 9rem;
+  }
+  .hero-overlay h1 {
+    font-size: 2rem;
+  }
+  .hero-overlay p {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 850px) {
+  .hero-overlay {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+}
+
+/* Hide arrows and show carousel indicators on narrow screens */
+@media (max-width: 850px) {
+  .arrow {
+    display: none !important;
+  }
+  
+  .carousel-indicators {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-overlay h1 {
+    font-size: 1.5rem;
+  }
+  .hero-overlay p {
+    font-size: 1rem;
+  }
+  .hero-btn {
+    font-size: 0.9rem;
+  }
 }
 </style>
