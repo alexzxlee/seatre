@@ -12,8 +12,19 @@
           @mouseenter="onParentEnter(idx)"
           @mouseleave="onParentLeave"
         >
+          <!-- Custom render for Contact Us button -->
+          <div v-if="item.label === 'Contact Us'" style="width:100%;display:flex;justify-content:center;margin-top:1rem;">
+            <NuxtLink
+              :to="item.to"
+              class="contact-btn inline-flex items-center gap-2"
+            >
+              Contact Us
+              <Icon name="lucide:arrow-right" size="1.2em" />
+            </NuxtLink>
+          </div>
+          <!-- Regular menu item -->
           <NuxtLink
-            v-if="item.to"
+            v-else-if="item.to"
             :to="item.to"
             class="vertical-nav-label w-full text-left bg-transparent border-0 p-0 m-0 font-inherit"
             :class="item.class"
@@ -63,8 +74,10 @@
                 class="block py-2 px-4 text-sm text-left text-[darkblue]"
                 :class="child.class"
               >
-                <span v-if="child.icon" :class="child.icon" style="margin-right:0.5em;"></span>
-                {{ child.label }}
+                  <span style="display:inline-flex;align-items:center;vertical-align:middle;">
+                    <Icon :name="child.icon ? child.icon.replace(/^i-/, '') : 'lucide:smile'" size="1.56em" style="margin-right:0.4em;" />
+                    <span>{{ child.label }}</span>
+                  </span>
               </NuxtLink>
               <span v-else class="block py-2 px-4 text-sm font-bold text-left text-[darkblue] cursor-default">
                 {{ child.label }}
@@ -140,6 +153,13 @@ function onSubmenuLeave() {
 .vertical-nav-label {
   flex: 1;
 }
+.vertical-nav-submenu .i-lucide\:smile {
+  color: #888;
+  transition: color 0.15s;
+}
+.vertical-nav-submenu li:hover .i-lucide\:smile {
+  color: darkblue;
+}
 .vertical-nav-arrow {
   margin-left: 0.5em;
   display: flex;
@@ -163,6 +183,23 @@ function onSubmenuLeave() {
 .collapse-enter-active, .collapse-leave-active {
   transition: max-height 0.28s cubic-bezier(.4,0,.2,1), opacity 0.18s cubic-bezier(.4,0,.2,1), transform 0.28s cubic-bezier(.4,0,.2,1);
   overflow: hidden;
+}
+/* Contact Us button style (copied from Header.vue for consistency) */
+.contact-btn {
+  pointer-events: auto;
+  background: #0a6cff;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.5rem 1.4rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0003;
+  transition: background 0.2s;
+}
+.contact-btn:hover {
+  background: seagreen;
 }
 .collapse-enter-from, .collapse-leave-to {
   max-height: 0;
