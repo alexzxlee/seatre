@@ -30,7 +30,7 @@
             <div>
               <div class="font-bold my-3 pb-2 text-base">Company</div>
               <ul class="space-y-5 text-sm">
-                <li><NuxtLink to="/about-veritree">About veritree</NuxtLink></li>
+                <li><NuxtLink to="/about-seatre">About seatre</NuxtLink></li>
                 <li><NuxtLink to="/careers">Careers</NuxtLink></li>
                 <li><NuxtLink to="/contact">Contact</NuxtLink></li>
                 <li><NuxtLink to="/login">Login</NuxtLink></li>
