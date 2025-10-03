@@ -255,19 +255,22 @@ onBeforeUnmount(() => {
 }
 .explore-btn {
   pointer-events: auto;
-  background: darkblue;
+  background: linear-gradient(45deg, #1e3a8a 0%, #1e40af 40%, #60a5fa 60%, #93c5fd 100%);
   color: #fff;
   border: none;
   border-radius: 2rem;
-  padding: 0.5rem 1.3rem;
+  padding: 0.5rem 1.4rem;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 2px 8px #0003;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 .explore-btn:hover {
-  color: #fff !important;
-  background: seagreen
+  background: linear-gradient(45deg, #059669 0%, #10b981 40%, #34d399 60%, #6ee7b7 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px #0004;
 }
 </style>
