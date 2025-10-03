@@ -69,16 +69,23 @@ useHead({
 
 .back-home-btn {
   display: inline-block;
-  background: #0a6cff;
-  color: white;
-  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #1e3a8a 0%, #1e40af 40%, #60a5fa 60%, #93c5fd 100%);
+  color: #fff;
+  padding: 0.5rem 1.4rem;
   border-radius: 2rem;
   text-decoration: none;
+  font-size: 1rem;
   font-weight: bold;
-  transition: background 0.3s;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0003;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .back-home-btn:hover {
-  background: #0056d3;
+  background: linear-gradient(45deg, #059669 0%, #10b981 40%, #34d399 60%, #6ee7b7 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px #0004;
 }
 </style>
