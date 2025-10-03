@@ -99,7 +99,7 @@
             link: 'block py-2 px-4 text-base font-bold text-[darkblue] text-left'
           }"
         /> -->
-        <VerticalHoverNav :items="verticalNavItems" />
+        <VerticalHoverNav :items="verticalNavItems" @close-menu="showVerticalMenu = false" />
       </div>
     </div>
   </header>

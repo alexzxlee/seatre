@@ -17,6 +17,7 @@
             <NuxtLink
               :to="item.to"
               class="contact-btn inline-flex items-center gap-2"
+              @click="onSubmenuClick"
             >
               Contact Us
               <Icon name="lucide:arrow-right" size="1.2em" />
@@ -29,6 +30,7 @@
             class="vertical-nav-label w-full text-left bg-transparent border-0 p-0 m-0 font-inherit"
             :class="item.class"
             style="cursor:pointer;display:block;"
+            @click="onSubmenuClick"
           >
             {{ item.label }}
           </NuxtLink>
@@ -73,6 +75,7 @@
                 :to="child.to"
                 class="block py-2 px-4 text-sm text-left text-[darkblue]"
                 :class="child.class"
+                @click="onSubmenuClick"
               >
                   <span style="display:inline-flex;align-items:center;vertical-align:middle;">
                     <Icon :name="child.icon ? child.icon.replace(/^i-/, '') : 'lucide:smile'" size="1.56em" style="margin-right:0.4em;" />
@@ -99,6 +102,13 @@ const props = defineProps({
     required: true
   }
 })
+
+const emit = defineEmits(['close-menu'])
+
+function onSubmenuClick() {
+  // Close the vertical menu when any submenu item is clicked
+  emit('close-menu')
+}
 const openIndex = ref(null)
 const submenuHover = ref(false)
 let closeTimeout = null
