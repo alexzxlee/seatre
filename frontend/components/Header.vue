@@ -15,7 +15,7 @@
                     <!-- Top-right (135°) -->
                     <text x="29" y="15" transform="rotate(135 31 11)">s</text>
                     <!-- Right (vertical) -->
-                    <text x="36" y="19">s</text>
+                    <text x="36" y="20">s</text>
                     <!-- Bottom-right (225°) -->
                     <text x="32" y="33.5" transform="rotate(225 31 29)">s</text>
                     <!-- Bottom (horizontal) -->
@@ -23,14 +23,14 @@
                     <!-- Bottom-left (315°) -->
                     <text x="14" y="33" transform="rotate(315 9 29)">s</text>
                     <!-- Left (vertical) -->
-                    <text x="9.5" y="19">s</text>
+                    <text x="9.5" y="20">s</text>
                     <!-- Top-left (45°) -->
                     <text x="10.5" y="8.5" transform="rotate(45 9 11)">s</text>
                     <!-- Inner ring -->
                     <text x="18" y="13.5" transform="rotate(90 20 13.5)">s</text>
-                    <text x="29" y="19">s</text>
+                    <text x="29" y="20">s</text>
                     <text x="17.5" y="26.5" transform="rotate(90 20 26.5)">s</text>
-                    <text x="16.5" y="19">s</text>
+                    <text x="16.5" y="20">s</text>
                   </g>
                 </svg>
               </span>
@@ -197,6 +197,7 @@ const items = ref([
   {
     label: 'Login',
     to: "/login",
+    target: "_blank",
     class: navMenuClass
   },
   // { slot: 'theme-toggle' }
