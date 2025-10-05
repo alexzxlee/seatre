@@ -32,7 +32,14 @@
             style="cursor:pointer;display:block;"
             @click="onSubmenuClick"
           >
-            {{ item.label }}
+            <span class="truncate">{{ item.label }}</span>
+            <Icon
+              v-if="item.target === '_blank'"
+              name="lucide:arrow-up-right"
+              class="ext-icon inline-block align-top"
+              size="1em"
+              aria-hidden="true"
+            />
           </NuxtLink>
           <span
             v-else
@@ -80,6 +87,13 @@
                   <span style="display:inline-flex;align-items:center;vertical-align:middle;">
                     <Icon :name="child.icon ? child.icon.replace(/^i-/, '') : 'lucide:smile'" size="1.56em" style="margin-right:0.4em;" />
                     <span>{{ child.label }}</span>
+                    <Icon
+                      v-if="child.target === '_blank'"
+                      name="lucide:arrow-up-right"
+                      class="ext-icon inline-block align-top"
+                      size="0.8em"
+                      aria-hidden="true"
+                    />
                   </span>
               </NuxtLink>
               <span v-else class="block py-2 px-4 text-sm font-bold text-left text-[darkblue] cursor-default">
@@ -163,6 +177,12 @@ function onSubmenuLeave() {
 .vertical-nav-label {
   flex: 1;
 }
+.vertical-nav-label,
+.vertical-nav-submenu a { color: darkblue; }
+/* Keep color stable on hover (prevent seagreen in vertical nav) */
+.vertical-nav-label:hover,
+.vertical-nav-trigger:hover .vertical-nav-label,
+.vertical-nav-submenu a:hover { color: darkblue !important; }
 .vertical-nav-submenu .i-lucide\:smile {
   color: #888;
   transition: color 0.15s;
@@ -225,4 +245,10 @@ function onSubmenuLeave() {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* External link icon alignment and color */
+.ext-icon { color: var(--color-muted, #888); margin-left: .04em; }
+.vertical-nav-label:hover .ext-icon,
+.vertical-nav-trigger:hover .vertical-nav-label .ext-icon,
+.vertical-nav-submenu a:hover .ext-icon { color: darkblue; }
 </style>
