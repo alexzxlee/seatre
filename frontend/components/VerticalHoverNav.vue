@@ -27,6 +27,8 @@
           <NuxtLink
             v-else-if="item.to"
             :to="item.to"
+            :target="item.target || undefined"
+            :rel="item.target === '_blank' ? (isExternal(item.to) ? 'noopener noreferrer' : 'noopener') : undefined"
             class="vertical-nav-label w-full text-left bg-transparent border-0 p-0 m-0 font-inherit"
             :class="item.class"
             style="cursor:pointer;display:block;"
@@ -80,6 +82,8 @@
               <NuxtLink
                 v-if="!child.disabled"
                 :to="child.to"
+                :target="child.target || undefined"
+                :rel="child.target === '_blank' ? (isExternal(child.to) ? 'noopener noreferrer' : 'noopener') : undefined"
                 class="block py-2 px-4 text-sm text-left text-[darkblue]"
                 :class="child.class"
                 @click="onSubmenuClick"
@@ -110,6 +114,33 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRequestURL } from '#imports'
+
+/**
+ * rel security notes for target="_blank":
+ * - noopener: prevents the new tab from gaining access to window.opener (guards against reverse tabnabbing).
+ * - noreferrer: for truly external URLs, also hide the referrer (the destination won't see the source URL).
+ * Policy: same-origin links => rel="noopener"; external links => rel="noopener noreferrer".
+ */
+// Smart external detector: treat same-origin URLs as internal; others as external
+const reqUrl = useRequestURL()
+const currentOrigin = reqUrl?.origin || (typeof window !== 'undefined' ? window.location.origin : '')
+const isExternal = (to) => {
+  if (!to || typeof to !== 'string') return false
+  // Special schemes are external
+  if (/^(mailto:|tel:|data:|blob:|ftp:)/i.test(to)) return true
+  // Internal anchors or absolute paths
+  if (to.startsWith('/') || to.startsWith('#')) return false
+  try {
+    const base = currentOrigin || 'http://localhost'
+    const u = new URL(to, base)
+    if (currentOrigin) return u.origin !== currentOrigin
+    // Fallback: consider absolute/protocol-relative as external
+    return /^(https?:)?\/\//i.test(to)
+  } catch {
+    return false
+  }
+}
 const props = defineProps({
   items: {
     type: Array,
