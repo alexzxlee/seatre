@@ -13,7 +13,8 @@
 
           <!-- Brand centered directly above the button -->
           <div class="brand">
-            <NuxtLink to="/" class="logo-link flex items-center justify-center">
+            <!-- Intentionally non-clickable brand on the login page -->
+            <div class="logo-link flex items-center justify-center" aria-label="Seatre brand">
               <span class="logo-svg">
                 <span class="logo-rotate">
                   <span class="logo-pulse-fade">
@@ -46,7 +47,7 @@
                 </span>
               </span>
               <span class="brand-text ml-2">sea<span style="color: seagreen">tre</span></span>
-            </NuxtLink>
+            </div>
           </div>
 
           <div class="input-group">
@@ -172,7 +173,7 @@ const login = async () => {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  gap: 0.5rem;
+  gap: 0; /* remove extra spacing so ml-2 controls the separation (half of previous total) */
 }
 
 .logo-svg, .logo-rotate, .logo-pulse-fade { 
