@@ -86,7 +86,7 @@ function getNavMenuClass() {
     if (window.innerWidth < 1340) {
       return 'px-1 font-extrabold text-sm text-[darkblue]';
     } else if (window.innerWidth < 1435) {
-      return 'px-1 font-extrabold text-xs text-[darkblue]';
+      return 'px-1 font-extrabold text-sm text-[darkblue]';
     } else {
       return 'px-1 font-extrabold text-sm text-[darkblue]';
     }
