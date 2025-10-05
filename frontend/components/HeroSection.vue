@@ -110,6 +110,8 @@ const nextVideo = () => {
   padding: 0;
   box-shadow: none;
   transition: filter 0.2s;
+  /* provide depth for chevron 3D rotation */
+  perspective: 800px;
 }
 .arrow.left { left: 2vw; }
 .arrow.right { right: 2vw; }
@@ -117,7 +119,11 @@ const nextVideo = () => {
   outline: none;
 }
 .arrow:hover .chevron {
+  /* brighten and bring chevron into focus on hover */
   filter: drop-shadow(0 0 6px #fff);
+  stroke-opacity: 1;
+  /* avoid disappearing due to exact 180deg + backface culling */
+  transform: rotateX(160deg);
 }
 .chevron {
   width: 48px;
@@ -128,6 +134,14 @@ const nextVideo = () => {
   stroke-linejoin: round;
   fill: none;
   display: block;
+  /* appear hollow and mostly transparent before hover */
+  stroke-opacity: 0.25;
+  /* smooth rotation and opacity changes */
+  transition: transform 0.35s ease, stroke-opacity 0.2s ease, filter 0.2s ease;
+  transform: rotateX(0deg);
+  transform-origin: center;
+  backface-visibility: visible;
+  will-change: transform, filter, stroke-opacity;
 }
 
 /* Carousel indicators */
