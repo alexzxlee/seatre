@@ -5,15 +5,15 @@
         <!-- B Corp block and commitment text, no Certified/Corporation -->
         <div class="flex flex-row items-center justify-center w-full lg:w-1/2 min-h-[180px] mb-10 lg:mb-0">
           <div class="flex-shrink-0 flex items-center justify-center md:justify-end w-full md:w-[35%] max-w-[200px] h-full sm:ml-34 ml-34">
-            <img src="/bcorporation.png" alt="B Corp" class="w-48 h-80 filter invert brightness-200" style="object-fit:contain;max-width:180px;" />
+            <img src="/bcorporation.png" alt="B Corp" class="w-36 h-60 filter invert brightness-200 bcorp-image" style="object-fit:contain;max-width:180px;" />
           </div>
           <div class="flex flex-col justify-center md:items-start h-full md:ml-4 w-full md:w-[65%] md:pl-4 md:pr-4 max-w-[600px] sm:ml-8 mr-36">
-            <br><br><div class="font-bold text-2xl sm:text-2xl md:text-2xl leading-snug mb-2 w-[360px] max-w-[360px] whitespace-pre-line bcorp-text" id="commitment-text" style="margin-top:0;">
+            <br><div class="font-bold text-xl sm:text-xl md:text-xl leading-[1.75] mb-2 w-[360px] max-w-[360px] whitespace-pre-line bcorp-text commitment-text" id="commitment-text" style="margin-top:0;">
               This company is committed to<br>
               accountability, transparency,<br>
               and continuous improvement.
-            </div><br><br>
-            <div class="border-t-10 border-white mt-2 mb-2 w-full"></div>
+            </div><br>
+            <div class="border-t-10 border-white mt-2 mb-2 w-full max-w-[285px] bcorp-line"></div>
           </div>
         </div>
         <!-- Links block responsive -->
@@ -93,6 +93,40 @@
     font-size: 1.25rem; /* Adjust font size for small screens */
     width: 290px;
     line-height: 1.65; /* Relative line height (recommended) */
+  }
+}
+
+@media (max-width: 500px) {
+  .bcorp-text {
+    font-size: 1rem; /* Smaller font for very small screens */
+    width: 250px;
+    line-height: 1.9;
+  }
+  .bcorp-image {
+    width: 135px; /* Smaller image for very small screens */
+    height: auto;
+  }
+  .bcorp-line {
+    border-top: 8px solid white; /* Thinner line for very small screens */
+    width: 230px;
+    margin-top: 13px;
+    margin-bottom: 10px;
+  }
+  /* Keep social media icons at normal size */
+  [class*="i-lucide:"] {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+  }
+  
+  /* Specific icon targeting */
+  .i-lucide\:linkedin,
+  .i-lucide\:instagram, 
+  .i-lucide\:facebook,
+  .i-lucide\:youtube {
+    width: 20px !important;
+    height: 20px !important;
   }
 }
 </style>

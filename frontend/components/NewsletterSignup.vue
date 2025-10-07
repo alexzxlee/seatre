@@ -7,15 +7,15 @@
           <p class="mb-6 text-lg">Receive updates on new ocean-cleaning projects and our restoration initiatives—delivered straight to your inbox.</p>
           <!-- Optional: add a decorative SVG line here if you want -->
         </div>
-        <form class="flex flex-col md:flex-row items-center gap-4 flex-1">
+        <form class="newsletter-form flex flex-col md:flex-row items-center gap-4 flex-1">
           <input
             type="email"
             placeholder="Email"
-            class="rounded-full px-6 py-3 text-slate-900 bg-white w-full md:w-auto focus:outline-none"
+            class="newsletter-input rounded-full px-6 py-3 text-slate-900 bg-white w-full md:w-auto flex-1 md:flex-initial focus:outline-none"
           />
           <button
             type="submit"
-            class="rounded-full border border-white px-8 py-3 font-semibold hover:bg-white hover:text-slate-900 transition"
+            class="newsletter-button rounded-full border border-white px-8 py-3 font-semibold hover:bg-white hover:text-slate-900 transition whitespace-nowrap"
           >
             Subscribe
           </button>

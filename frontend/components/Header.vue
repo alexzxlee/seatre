@@ -83,7 +83,7 @@ const showVerticalMenu = ref(false)
 const navMenuClass = ref(getNavMenuClass())
 function getNavMenuClass() {
   if (typeof window !== 'undefined') {
-    if (window.innerWidth < 1340) {
+    if (window.innerWidth < 1360) {
       return 'px-1 font-extrabold text-sm text-[darkblue]';
     } else if (window.innerWidth < 1435) {
       return 'px-1 font-extrabold text-sm text-[darkblue]';
@@ -95,7 +95,7 @@ function getNavMenuClass() {
 }
 function updateNavMenuClass() {
   navMenuClass.value = getNavMenuClass();
-  if (typeof window !== 'undefined' && window.innerWidth > 1340) {
+  if (typeof window !== 'undefined' && window.innerWidth > 1360) {
     showVerticalMenu.value = false;
   }
 }
@@ -180,7 +180,7 @@ const items = ref([
 import VerticalHoverNav from './VerticalHoverNav.vue'
 const verticalNavItems = computed(() => {
   const filtered = items.value.filter(item => item.slot !== 'separator');
-  if (typeof window !== 'undefined' && window.innerWidth < 1340 && showVerticalMenu.value) {
+  if (typeof window !== 'undefined' && window.innerWidth < 1360 && showVerticalMenu.value) {
     filtered.push({
       label: 'Contact Us',
       to: '/contact-us',
@@ -194,7 +194,7 @@ const verticalNavItems = computed(() => {
 
 <style scoped>
 /* Logo animations are defined inside BrandMark.vue */
-@media (max-width: 1340px) {
+@media (max-width: 1360px) {
   .desktop-nav {
     display: none;
   }
@@ -202,7 +202,7 @@ const verticalNavItems = computed(() => {
     display: none;
   }
 }
-@media (min-width: 1340px) {
+@media (min-width: 1360px) {
   .hamburger-btn {
     display: none;
   }
@@ -252,11 +252,12 @@ const verticalNavItems = computed(() => {
 
 /* Custom background for UNavigationMenu popup subitems */
 .desktop-nav :deep(.bg-default) {
-  background:
-    linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
-    url('/images/seatre_15.png') top/cover no-repeat;
+  background: rgba(255,255,255,0.15) !important;
+  backdrop-filter: blur(10px);
   outline: none !important;
-  box-shadow: none !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+  border-radius: 8px !important;
+  z-index: 9999 !important;
 }
 
 /* Ensure brand is always clickable and on top */
@@ -264,6 +265,27 @@ const verticalNavItems = computed(() => {
   position: relative;
   z-index: 10;
   pointer-events: auto;
+}
+
+/* Header layout and spacing */
+.header-fixed-row {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+@media (max-width: 768px) {
+  .header-fixed-row {
+    padding-left: 1.8rem;
+    padding-right: 1.6rem;
+  }
+}
+
+/* Prevent dropdown clipping without breaking positioning */
+.site-header,
+.header-inner,
+.header-fixed-row,
+.desktop-nav {
+  overflow: visible;
 }
 
 

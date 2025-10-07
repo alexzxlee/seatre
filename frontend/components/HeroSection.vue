@@ -263,4 +263,13 @@ const nextVideo = () => {
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 500px) {
+  .hero-overlay h1 {
+    font-size: 1.3rem;
+  }
+  .hero-overlay p {
+    font-size: 0.85rem;
+  }
+}
 </style>

@@ -68,6 +68,29 @@ body {
   background: var(--color-bg);
   color: var(--color-fg);
   margin: 0;
+  overflow-x: hidden;
+}
+
+/* Global layout constraints to prevent horizontal overflow */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* More specific constraints - only target main containers, not all divs */
+#__nuxt, [data-v-app], main, section, header, footer {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Preserve layout flexibility for component internals */
+.impact-graph, .impact-bar-outer, .impact-number {
+  max-width: none !important;
+  overflow-x: visible !important;
 }
 
 a:hover { color: seagreen; }
@@ -81,8 +104,10 @@ a:hover { color: seagreen; }
 /* Header layout */
 .site-header {
   position: fixed;
-  inset: 0 0 auto 0; /* auto here expands header to full height */
-  width: 100vw;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 3000;
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(10px);
@@ -270,4 +295,21 @@ without background color and without box shadow. */
 [data-v-a81738bd] button::before {
   background: transparent !important;
   box-shadow: none !important;
+}
+
+/* Fix newsletter and footer layout issues caused by global constraints */
+.newsletter-form, .newsletter-input, .newsletter-button {
+  max-width: none !important;
+}
+
+/* Preserve footer B-Corp section layout */
+.bcorp-text, .commitment-text {
+  max-width: none !important;
+}
+
+/* Fix collective impact layout */
+.collective-impact-section .container,
+.collective-impact-section .grid,
+.collective-impact-section .flex {
+  max-width: none !important;
 }
