@@ -10,7 +10,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app # Local folder : Container folder (This creates a two-way sync between: Host (your Mac): frontend, & Container: /app/)
       - /app/node_modules
     working_dir: /app
     command: npm run dev
