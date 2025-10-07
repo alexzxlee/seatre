@@ -11,13 +11,14 @@
           :class="{ 'open': openIndex === idx }"
           @mouseenter="onParentEnter(idx)"
           @mouseleave="onParentLeave"
+          @click="onParentClick(idx)"
         >
           <!-- Custom render for Contact Us button -->
           <div v-if="item.label === 'Contact Us'" style="width:100%;display:flex;justify-content:center;margin-top:1rem;">
             <NuxtLink
               :to="item.to"
               class="contact-btn inline-flex items-center gap-2"
-              @click="onSubmenuClick"
+              @click.stop="onSubmenuClick"
             >
               Contact Us
               <Icon name="lucide:arrow-right" size="1.2em" />
@@ -32,7 +33,7 @@
             class="vertical-nav-label w-full text-left bg-transparent border-0 p-0 m-0 font-inherit"
             :class="item.class"
             style="cursor:pointer;display:block;"
-            @click="onSubmenuClick"
+            @click.stop="onSubmenuClick"
           >
             <span class="truncate">{{ item.label }}</span>
             <Icon
@@ -86,7 +87,7 @@
                 :rel="child.target === '_blank' ? (isExternal(child.to) ? 'noopener noreferrer' : 'noopener') : undefined"
                 class="block py-2 px-4 text-sm text-left text-[darkblue]"
                 :class="child.class"
-                @click="onSubmenuClick"
+                @click.stop="onSubmenuClick"
               >
                   <span style="display:inline-flex;align-items:center;vertical-align:middle;">
                     <Icon :name="child.icon ? child.icon.replace(/^i-/, '') : 'lucide:smile'" size="1.56em" style="margin-right:0.4em;" />
@@ -157,18 +158,39 @@ function onSubmenuClick() {
 const openIndex = ref(null)
 const submenuHover = ref(false)
 let closeTimeout = null
+
+function onParentClick(idx) {
+  // For mobile: toggle the clicked menu, close others
+  if (props.items[idx]?.children) {
+    openIndex.value = openIndex.value === idx ? null : idx
+  }
+}
+
 function onParentEnter(idx) {
-  clearTimeout(closeTimeout)
-  openIndex.value = idx
+  // Only handle hover on desktop (when not touch device)
+  if (typeof window !== 'undefined' && !window.matchMedia('(pointer: coarse)').matches) {
+    clearTimeout(closeTimeout)
+    if (props.items[idx]?.children) {
+      openIndex.value = idx
+    }
+  }
 }
+
 function onParentLeave() {
-  closeTimeout = setTimeout(() => {
-    if (!submenuHover.value) openIndex.value = null
-  }, 120)
+  // Only handle hover on desktop (when not touch device)
+  if (typeof window !== 'undefined' && !window.matchMedia('(pointer: coarse)').matches) {
+    closeTimeout = setTimeout(() => {
+      if (!submenuHover.value) openIndex.value = null
+    }, 120)
+  }
 }
+
 function onSubmenuLeave() {
   submenuHover.value = false
-  openIndex.value = null
+  // Only auto-close on desktop hover
+  if (typeof window !== 'undefined' && !window.matchMedia('(pointer: coarse)').matches) {
+    openIndex.value = null
+  }
 }
 </script>
 
@@ -212,8 +234,11 @@ function onSubmenuLeave() {
 .vertical-nav-submenu a { color: darkblue; }
 /* Keep color stable on hover (prevent seagreen in vertical nav) */
 .vertical-nav-label:hover,
-.vertical-nav-trigger:hover .vertical-nav-label,
-.vertical-nav-submenu a:hover { color: darkblue !important; }
+.vertical-nav-trigger:hover { color: darkblue !important; } 
+.vertical-nav-submenu a:hover { 
+  color: seagreen !important; 
+  background: rgba(255,255,255,0.2) !important;
+}
 .vertical-nav-submenu .i-lucide\:smile {
   color: #888;
   transition: color 0.15s;
