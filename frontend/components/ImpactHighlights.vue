@@ -4,7 +4,7 @@
       <div class="grid gap-10 md:grid-cols-3">
         <!-- Impact You Can See -->
         <div class="impact-card group flex flex-col justify-center items-start p-8 rounded-3xl bg-white shadow-xl transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden">
-          <span class="absolute right-6 bottom-6 opacity-20 animate-float">
+          <span class="absolute right-6 bottom-6 opacity-60 animate-float">
             <!-- Animated wave SVG -->
             <svg width="60" height="32" viewBox="0 0 60 32" fill="none"><path d="M0 16 Q15 32 30 16 T60 16" stroke="#0ea5e9" stroke-width="4" fill="none"><animate attributeName="d" values="M0 16 Q15 32 30 16 T60 16;M0 16 Q15 0 30 16 T60 16;M0 16 Q15 32 30 16 T60 16" dur="2s" repeatCount="indefinite"/></path></svg>
           </span>
@@ -16,7 +16,7 @@
         </div>
         <!-- Impact You Can Measure -->
         <div class="impact-card group flex flex-col justify-center items-start p-8 rounded-3xl bg-white shadow-xl transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden">
-          <span class="absolute right-6 bottom-6 opacity-20 animate-spin-slow">
+          <span class="absolute right-6 bottom-6 opacity-60 animate-spin-slow">
             <!-- Animated radar SVG --> 
             <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
               <circle cx="28" cy="28" r="24" stroke="#22c55e" stroke-width="3" fill="none"/>
@@ -34,7 +34,7 @@
         </div>
         <!-- Impact You Can Share -->
         <div class="impact-card group flex flex-col justify-center items-start p-8 rounded-3xl bg-white shadow-xl transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl relative overflow-hidden">
-          <span class="absolute right-6 bottom-6 opacity-20 animate-bounce">
+          <span class="absolute right-6 bottom-6 opacity-60 animate-bounce">
             <!-- Animated share/graph SVG -->
             <svg width="56" height="40" viewBox="0 0 56 40" fill="none">
               <polyline points="6,34 22,18 34,28 50,10" stroke="#6366f1" stroke-width="4" fill="none"/>
@@ -57,7 +57,7 @@
 <style scoped>
 .impact-card {
   box-shadow: 0 4px 32px 0 #0ea5e91a, 0 1.5px 6px 0 #0001;
-  background: linear-gradient(135deg, #f8fafc 0%, #fff 100%);
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%);
 }
 .animate-float {
   animation: floatWaves 2.5s ease-in-out infinite;
@@ -79,11 +79,12 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
-</style>
+
 /* Ensure the animated SVG stays visually separated from the button */
 .impact-card span[absolute] {
   pointer-events: none;
 }
+</style>
 
 
 <script setup>

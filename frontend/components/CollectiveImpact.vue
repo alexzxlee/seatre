@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .collective-impact-section {
-  background: url('/images/seatre_7.jpg') center/cover no-repeat;
+  background: url('/images/seatre_17.jpg') center/cover no-repeat;
 }
 .impact-graph {
   position: relative;
