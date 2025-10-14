@@ -2,7 +2,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   modules: [
     '@nuxt/ui',
     '@nuxtjs/color-mode',
@@ -10,7 +10,10 @@ export default defineNuxtConfig({
   ],
   icon: {
     // auto loads installed @iconify-json packages
-    size: '1em'
+    size: '1em',
+    // Default is "/api/_nuxt_icon" which conflicts with our Vite dev proxy to the backend.
+    // Move it off the /api prefix so requests are handled by Nuxt (not proxied), fixing 404s.
+    localApiEndpoint: '/_nuxt_icon'
   },
   // Minimal @nuxt/ui config (colors can be customized via CSS variables or tailwind theme if needed)
   colorMode: {

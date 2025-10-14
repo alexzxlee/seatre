@@ -1,8 +1,4 @@
-export default defineNuxtRouteMiddleware((to) => {
-  if (to.path.startsWith('/admin')) {
-    const role = useCookie('user_role')
-    if (role.value !== 'admin') {
-      return navigateTo('/')
-    }
-  }
+export default defineNuxtRouteMiddleware(async (to) => {
+  // Global middleware for admin-related global logic
+  // Currently empty - add global admin logic here if needed
 })

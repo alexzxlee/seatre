@@ -86,11 +86,11 @@ bun run preview
 
 This project runs as two Node.js apps in cPanel: a Nuxt SSR frontend and an Express API backend.
 
-- Version control: In cPanel, use Git Version Control to clone this repo into `/home/USER/apps/ecommerce2` (recommended), or upload files via File Manager/FTP.
+- Version control: In cPanel, use Git Version Control to clone this repo into `/home/USER/apps/seatre` (recommended), or upload files via File Manager/FTP.
 
 Backend (Express API)
 - cPanel → Setup Node.js App → Create
-	- App root: `apps/ecommerce2/server`
+	- App root: `apps/seatre/server`
 	- Startup file: `index.js`
 	- Node version: choose the default available
 	- Environment variables:
@@ -103,7 +103,7 @@ Backend (Express API)
 
 Frontend (Nuxt SSR)
 - cPanel → Setup Node.js App → Create
-	- App root: `apps/ecommerce2/frontend`
+	- App root: `apps/seatre/frontend`
 	- Startup file: `server.cjs`
 	- Environment variables:
 		- `NODE_ENV=production`

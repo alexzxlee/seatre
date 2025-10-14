@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce2",
+  "name": "seatre",
   "private": true,
   "scripts": {
     "dev": "docker-compose up --build",

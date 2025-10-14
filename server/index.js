@@ -2,9 +2,15 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
+import { body, validationResult } from 'express-validator'
 import { consola } from 'consola'
 import sequelize, { testConnection } from './sequelize.js'
 import authRouter from './routes/auth.js'
+import newsletterRouter from './routes/newsletter.js'
+import User from './models/User.js'
+import './models/NewsletterSubscription.js'
 
 // Temporary DB connectivity check (remove after verifying in cPanel logs)
 testConnection()
@@ -13,8 +19,47 @@ const app = express()
 const PORT = process.env.PORT || 3001
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
-app.use(cors({ origin: FRONTEND_URL, credentials: true })) // exact domain with protocol
-app.use(express.json())
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+  crossOriginEmbedderPolicy: false // Allow embedding for development
+}))
+
+// Rate limiting - commercial grade
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+})
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 auth requests per windowMs
+  message: 'Too many authentication attempts, please try again later.',
+  skipSuccessfulRequests: true
+})
+
+app.use(limiter)
+app.use('/api/auth', authLimiter)
+
+// CORS with proper security
+app.use(cors({ 
+  origin: FRONTEND_URL, 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+}))
+
+app.use(express.json({ limit: '10mb' })) // Prevent large payload attacks
 app.use(cookieParser())
 
 // Health check (uses Sequelize/MySQL)
@@ -32,6 +77,7 @@ app.get('/healthz', async (_req, res) => {
 
 // API routes
 app.use('/api/auth', authRouter)
+app.use('/api/newsletter', newsletterRouter)
 
 // Retry DB connection before starting server for backend DB connection failed: ECONNREFUSED.
 // Connect to MySQL before it was ready. This is common in Docker setups.
@@ -52,6 +98,37 @@ async function waitForDb(retries = 10, delay = 3000) {
 
 async function start() {
   await waitForDb() // Only start server after DB is reachable
+  
+  // Sync database models
+  try {
+    await sequelize.sync({ force: true }) // Set to true to reset tables during development
+    consola.success('Database synced successfully')
+    
+    // Create demo admin user if it doesn't exist
+    const adminExists = await User.findOne({ where: { email: 'alexzxlee@outlook.com' } })
+    if (!adminExists) {
+      await User.create({
+        email: 'alexzxlee@outlook.com',
+        password: 'Alex2025',
+        role: 'admin'
+      })
+      consola.info('Demo admin user created (alexzxlee@outlook.com / Alex2025)')
+    }
+
+    // Create demo regular user if it doesn't exist
+    const userExists = await User.findOne({ where: { email: 'ben@localhost.com' } })
+    if (!userExists) {
+      await User.create({
+        email: 'ben@localhost.com',
+        password: 'Ben2025',
+        role: 'user'
+      })
+      consola.info('Demo user created (ben@localhost.com / Ben2025)')
+    }
+  } catch (error) {
+    consola.error('Database sync failed:', error)
+  }
+  
   app.listen(PORT, () => consola.ready(`Backend running on http://localhost:${PORT}`))
 }
 start()

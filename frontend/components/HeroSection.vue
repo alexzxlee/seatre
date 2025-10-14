@@ -34,7 +34,7 @@
       <template v-if="current === 0">
         <h1>Remove a ton of plastics.<br>Clean Ocean.</h1>
         <p>When you sign up for our newsletter, we'll remove a verified ton of plastic.</p>
-        <NuxtLink to="/sign-up-now" class="hero-btn inline-flex items-center gap-2">
+        <NuxtLink to="/register" class="hero-btn inline-flex items-center gap-2">
           Sign Up Now <Icon name="lucide:arrow-right" size="1.2em" />
         </NuxtLink>
       </template>
