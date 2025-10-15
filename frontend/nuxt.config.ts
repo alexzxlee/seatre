@@ -23,9 +23,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      // Prefer NUXT_PUBLIC_API_BASE when provided, fallback to API_BASE, then '/api'
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || process.env.API_BASE || '/api'
-    }
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api'
+    },
+    apiBase: process.env.API_BASE // This is for SSR/server-side only
   },
   vite: {
     plugins: [tailwindcss()],

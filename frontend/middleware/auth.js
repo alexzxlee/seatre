@@ -1,11 +1,12 @@
 export default defineNuxtRouteMiddleware(async (_to) => {
   try {
-    const apiBase = useRuntimeConfig().public.apiBase
+    const config = useRuntimeConfig()
+    const apiBase = import.meta.server ? config.apiBase : config.public.apiBase
 
     // Shared user state to avoid duplicate fetches across pages
     const userState = useState('user', () => null)
     if (!userState.value) {
-      const headers = process.server ? useRequestHeaders(['cookie']) : undefined
+      const headers = import.meta.server ? useRequestHeaders(['cookie']) : undefined
       const user = await $fetch('/auth/me', {
         baseURL: apiBase,
         credentials: 'include',

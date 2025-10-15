@@ -1,6 +1,6 @@
 export const useApiBase = (): string => {
   const config = useRuntimeConfig()
-  return config.public.apiBase
+  return import.meta.server ? config.apiBase : config.public.apiBase
 }
 
 export const useApiFetch = () => {

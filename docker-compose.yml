@@ -3,8 +3,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    image: nuxt-frontend
-    container_name: nuxt-frontend
+    image: frontend
+    container_name: frontend
     env_file:
       - .env
     ports:
@@ -21,8 +21,8 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile.dev
-    image: express-backend
-    container_name: express-backend
+    image: backend
+    container_name: backend
     env_file:
       - .env
     ports:
