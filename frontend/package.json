@@ -12,16 +12,16 @@
 	},
 	"dependencies": {
 		"@nuxt/icon": "^1.5.0",
-		"@nuxt/ui": "^3.3.2",
+		"@nuxt/ui": "^3.3.6",
 		"nuxt": "^4.0.3",
-		"vue": "^3.4.0"
+		"vue": "^3.5.22"
 	},
 	"devDependencies": {
 		"@iconify-json/heroicons": "^1.2.3",
 		"@iconify-json/lucide": "^1.2.69",
 		"@nuxt/devtools": "^1.6.0",
 		"@tailwindcss/vite": "^4.1.12",
-		"@types/node": "^20.19.10",
+		"@types/node": "^20.19.21",
 		"tailwindcss": "^4.1.12"
 	}
 }
