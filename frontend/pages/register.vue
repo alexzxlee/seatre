@@ -274,6 +274,14 @@ const register = async () => {
   color: #6b7280;
 }
 
+.login-link:hover {
+  background: none !important;
+}
+
+.login-link span {
+  font-weight: 400 !important;
+}
+
 .link {
   color: #1f2937;
   text-decoration: none;

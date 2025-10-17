@@ -248,10 +248,20 @@ const { data: user, pending, error } = useLazyFetch('/auth/me', {
 	default: () => null
 });
 
+watch(error, (val) => {
+		if (val) {
+			const toast = useToast();
+			toast.add({ title: 'Authentication required. Please log in!', color: 'error', duration: 2500 });
+			navigateTo('/login');
+		}
+});
+
 const logout = async () => {
 	try {
 		const apiFetch = useApiFetch()
 		await apiFetch('/auth/logout', { method: 'POST' });
+		const toast = useToast();
+		toast.add({ title: 'Logged out successfully', color: 'success', duration: 1500 });
 		await navigateTo('/login');
 	} catch (err) {
 		console.error('Logout failed:', err);

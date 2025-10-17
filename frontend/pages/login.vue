@@ -1,68 +1,61 @@
 <template>
-	<div class="login-container">
-		<!-- Left side - Image -->
-		<div class="image-section">
-			<img src="/images/seatre_16.jpg" alt="Seatre Environmental Impact" class="hero-image" />
-		</div>
-    
-    <!-- Right side - Login Form -->
-    <div class="form-section">
-      <div class="login-form">
-        <!-- Login Form -->
-        <form @submit.prevent="login" novalidate class="form">
+<div class="login-container">
+  <!-- Left side - Image -->
+  <div class="image-section">
+    <img src="/images/seatre_16.jpg" alt="Seatre Environmental Impact" class="hero-image" />
+  </div>
 
-          <!-- Brand centered directly above the button -->
-          <div class="brand">
-            <BrandMark class="logo-link flex items-center justify-center" to="/login" aria-label="Seatre brand" />
+  <!-- Right side - Login Form -->
+  <div class="form-section">
+    <div class="login-form">
+      <!-- Login Form -->
+      <form @submit.prevent="login" novalidate class="form">
+        <!-- Brand centered directly above the button -->
+        <div class="brand">
+          <BrandMark class="logo-link flex items-center justify-center" to="/login" aria-label="Seatre brand" />
+        </div>
+        <!-- Error banner (shown above inputs, same width and alignment as inputs) -->
+        <p v-if="error" class="error-message" role="alert">{{ error }}</p>
+        <div class="input-group">
+          <input 
+            v-model="email" 
+            type="email"
+            placeholder="Email" 
+            :aria-invalid="Boolean(fieldErrors.email)"
+            class="input-field" :class="{ 'input-error': fieldErrors.email }"
+          />
+          <div v-if="fieldErrors.email" class="field-error">
+            <Icon name="lucide:alert-triangle" class="w-4 h-4 mr-1 error-icon" />
+            <span>{{ fieldErrors.email }}</span>
           </div>
-
-          <!-- Error banner (shown above inputs, same width and alignment as inputs) -->
-          <p v-if="error" class="error-message" role="alert">{{ error }}</p>
-
-          <div class="input-group">
-						<input 
-							v-model="email" 
-							type="email"
-							placeholder="Email" 
-              :aria-invalid="Boolean(fieldErrors.email)"
-              class="input-field" :class="{ 'input-error': fieldErrors.email }"
-						/>
-            <div v-if="fieldErrors.email" class="field-error">
-              <Icon name="lucide:alert-triangle" class="w-4 h-4 mr-1 error-icon" />
-              <span>{{ fieldErrors.email }}</span>
-            </div>
+        </div>
+        <div class="input-group">
+          <input 
+            v-model="password" 
+            type="password" 
+            placeholder="Password" 
+            :aria-invalid="Boolean(fieldErrors.password)"
+            class="input-field" :class="{ 'input-error': fieldErrors.password }"
+          />
+          <div v-if="fieldErrors.password" class="field-error">
+            <Icon name="lucide:alert-triangle" class="w-4 h-4 mr-1 error-icon" />
+            <span>{{ fieldErrors.password }}</span>
           </div>
-					
-          <div class="input-group">
-						<input 
-							v-model="password" 
-							type="password" 
-							placeholder="Password" 
-              :aria-invalid="Boolean(fieldErrors.password)"
-              class="input-field" :class="{ 'input-error': fieldErrors.password }"
-						/>
-            <div v-if="fieldErrors.password" class="field-error">
-              <Icon name="lucide:alert-triangle" class="w-4 h-4 mr-1 error-icon" />
-              <span>{{ fieldErrors.password }}</span>
-            </div>
-					</div>
-
-          <div class="forgot-password">
-            <NuxtLink to="/password/recovery" class="forgot-link">Forgot password?</NuxtLink>
-          </div>
-
-					<button type="submit" :disabled="loading" class="signin-button">
-						{{ loading ? 'Signing In...' : 'Sign In' }}
-					</button>
-
-					<div class="register-link">
-						<span>Don't have an account? </span>
-						<NuxtLink to="/register" class="link">Create one here</NuxtLink>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+        </div>
+        <div class="forgot-password">
+          <NuxtLink to="/password/recovery" class="forgot-link">Forgot password?</NuxtLink>
+        </div>
+        <button type="submit" :disabled="loading" class="signin-button">
+          {{ loading ? 'Signing In...' : 'Sign In' }}
+        </button>
+        <div class="register-link">
+          <span>Don't have an account? </span>
+          <NuxtLink to="/register" class="link">Create one here</NuxtLink>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -73,7 +66,7 @@ definePageMeta({
 
 const email = ref<string>('alexzxlee@outlook.com')
 const password = ref<string>('Alex2025')
-const error = ref<string | null>(null)
+const error = ref<string>('')
 const loading = ref<boolean>(false)
 const apiFetch = useApiFetch()
 interface FieldErrors { email?: string; password?: string }
@@ -93,8 +86,11 @@ function validate() {
   return Object.keys(errs).length === 0
 }
 
+// Nuxt UI composables like useToast must be auto-imported by Nuxt, 
+// not manually and directly imported from @nuxt/ui.
+const toast = useToast();
 const login = async () => {
-  error.value = null
+  error.value = ''
   loading.value = true
   try {
     // Client-side validation (no native tooltip)
@@ -105,19 +101,16 @@ const login = async () => {
     // Debug: Check what base URL is being used
     const baseURL = useApiBase()
     console.log('API Base URL:', baseURL)
-    
     const response = await apiFetch('/auth/login', {
       method: 'POST',
       body: { email: email.value, password: password.value }
     })
-    
     console.log('Login response:', response)
-    
     // Check if login was successful - backend returns { user: {...} }
     if (response && response.user) {
-      console.log('Login successful, user:', response.user)
+      toast.add({ title: 'Login successful', color: 'success', duration: 1500 })
       // Give a small delay to ensure cookies are set
-      await new Promise(resolve => setTimeout(resolve, 100))
+      // await new Promise(resolve => setTimeout(resolve, 100))
       await navigateTo('/dashboard')
     } else {
       throw new Error('Login failed: Invalid response from server')
@@ -127,10 +120,13 @@ const login = async () => {
     const status: number | undefined = err?.status
     if (status === 401) {
       error.value = 'Your email or password do not match our records. Please try again.'
+      toast.add({ title: error.value, color: 'error', duration: 1500 })
     } else if (status === 429) {
       error.value = 'Too many attempts. Please wait a moment and try again.'
+      toast.add({ title: error.value, color: 'error', duration: 1500  })
     } else {
       error.value = err?.data?.message || err?.message || 'Something went wrong. Please try again.'
+      toast.add({ title: error.value, color: 'error', duration: 1500 })
     }
     password.value = ''
   } finally {
