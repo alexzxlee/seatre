@@ -19,6 +19,15 @@ const app = express()
 const PORT = process.env.PORT || 3001
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
+
+// CORS with proper security (must be first)
+app.use(cors({ 
+  origin: FRONTEND_URL, 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'x-csrf-token'],
+}))
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: {
@@ -49,15 +58,15 @@ const authLimiter = rateLimit({
 })
 
 app.use(limiter)
-app.use('/api/auth', authLimiter)
 
-// CORS with proper security
-app.use(cors({ 
-  origin: FRONTEND_URL, 
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-}))
+// Register CSRF route before authLimiter
+import crypto from 'crypto'
+app.get('/api/auth/csrf', (req, res) => {
+  const token = crypto.randomBytes(32).toString('hex')
+  res.json({ csrfToken: token })
+})
+
+app.use('/api/auth', authLimiter)
 
 app.use(express.json({ limit: '10mb' })) // Prevent large payload attacks
 app.use(cookieParser())
