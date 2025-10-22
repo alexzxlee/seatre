@@ -41,7 +41,7 @@
       <template v-else-if="current === 1">
         <h1>Sustainability Projects<br>You Can Trust</h1>
         <p>We don't just clean oceans. We manage, monitor, measure and report on them.</p>
-        <button class="hero-btn inline-flex items-center gap-2">Explore Projects <span class="i-lucide:arrow-right size-4"></span></button>
+        <NuxtLink to="/explore-projects" class="hero-btn inline-flex items-center gap-2">Explore Projects <span class="i-lucide:arrow-right size-4"></span></NuxtLink>
       </template>
     </div>
   </section>
