@@ -110,7 +110,7 @@ async function start() {
   
   // Sync database models
   try {
-    await sequelize.sync({ force: true }) // Set to true to reset tables during development
+    await sequelize.sync() // Use sync without force in production. Set to force: true to reset tables during development.
     consola.success('Database synced successfully')
     
     // Create demo admin user if it doesn't exist
