@@ -6,11 +6,18 @@ export function getTransporter() {
   if (transporter) return transporter
   const { SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS } = process.env
 
+  const secure = String(SMTP_SECURE || 'true') === 'true' // 465 = SSL (secure: true), 587 = STARTTLS (secure: false)
+  const allowInsecure = String(process.env.SMTP_ALLOW_INSECURE || 'false') === 'true'
+
+  // Log transporter config summary (do not log credentials)
+  console.info('Creating mail transporter', { host: SMTP_HOST, port: Number(SMTP_PORT || 465), secure, allowInsecure })
+
   transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: Number(SMTP_PORT || 465),
-    secure: String(SMTP_SECURE || 'true') === 'true', // true for 465, false for 587
-    auth: SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined
+    secure,
+    auth: SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
+    tls: allowInsecure ? { rejectUnauthorized: false } : undefined
   })
 
   return transporter

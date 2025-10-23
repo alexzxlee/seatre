@@ -16,6 +16,13 @@ import './models/NewsletterSubscription.js'
 testConnection()
 
 const app = express()
+// When running behind a reverse proxy (LiteSpeed, nginx, etc.) the
+// X-Forwarded-* headers are set by the proxy. Express needs to know
+// to trust those headers so middleware like express-rate-limit can
+// correctly use the originating IP. This defaults to false which
+// caused a ValidationError in production logs. Enable it by default
+// when deployed behind a well-configured proxy.
+app.set('trust proxy', true)
 const PORT = process.env.PORT || 3001
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
