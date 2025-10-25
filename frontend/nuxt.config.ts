@@ -23,16 +23,16 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api'
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api' // Used on the client side for API calls.
     },
-    apiBase: process.env.API_BASE // This is for SSR/server-side only
+    apiBase: process.env.API_BASE // This is for SSR/server-side only. Used on the server side (SSR) for API calls.
   },
   vite: {
     plugins: [tailwindcss()],
     server: {
       proxy: {
         '/api': {
-          target: process.env.BACKEND_URL || 'http://backend:3001',
+          target: process.env.BACKEND_URL || 'http://backend:3001', // Used by the Vite dev server proxy (mainly for local dev, but can be useful for consistency)
           changeOrigin: true
         }
       },
