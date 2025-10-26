@@ -22,7 +22,8 @@ export function useCurrentUser() {
       if (import.meta.server) {
         const event = useRequestEvent()
         opts.headers = {
-          cookie: event?.req.headers.cookie || ''
+          // Use event.node.req as recommended for Nuxt 3/4
+          cookie: event?.node?.req?.headers?.cookie || ''
         }
       }
   const res = await useApi('/auth/me', opts)
