@@ -14,23 +14,29 @@ export function issueRefreshToken(user) {
 
 export function setSecureCookies(res, accessToken, refreshToken) {
   const isProduction = process.env.NODE_ENV === 'production'
-  
+  // Enabling cross-subdomain authentication for SSR and client-side requests.
+  // This should fix the issue where SSR (refresh) does not recognize the login session.
+  // SameSite=None and domain=.everyonecancode.net are required for cookies to be sent across subdomains.
+  const cookieDomain = isProduction ? '.everyonecancode.net' : undefined
+
   // HTTP-only access token cookie (short-lived)
   res.cookie(COOKIE_NAME, accessToken, {
     httpOnly: true, // Prevent XSS attacks
     secure: isProduction, // HTTPS only in production
-    sameSite: isProduction ? 'strict' : 'lax', // CSRF protection
+    sameSite: isProduction ? 'none' : 'lax', // 'none' for cross-site, 'lax' for dev
     maxAge: 15 * 60 * 1000, // 15 minutes
-    path: '/'
+    path: '/',
+    ...(cookieDomain && { domain: cookieDomain })
   })
-  
+
   // HTTP-only refresh token cookie (long-lived)
   res.cookie(REFRESH_COOKIE_NAME, refreshToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    path: '/api/auth/refresh'
+    path: '/api/auth/refresh',
+    ...(cookieDomain && { domain: cookieDomain })
   })
 }
 
