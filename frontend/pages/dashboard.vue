@@ -241,9 +241,9 @@ definePageMeta({
   middleware: 'auth'
 })
 
-
 // Debug: log API base URL in browser
 console.log('API base (dashboard):', useApiBase())
+
 // Simple client-side only auth check - fixes refresh issue
 const { data: user, pending, error } = useLazyFetch('/auth/me', {
   baseURL: useApiBase(),
