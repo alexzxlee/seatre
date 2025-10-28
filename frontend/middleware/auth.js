@@ -1,7 +1,16 @@
 
 import { useCurrentUser } from '../composables/useCurrentUser'
+
 import fs from 'fs'
 import path from 'path'
+
+/**
+ * Server-side logging guidance:
+ * - console.log in server-side middleware will NOT appear in the browser console and usually won’t show up in production logs on cPanel/Passenger.
+ * - logToFile writes to a file you can check via SSH, making it reliable for production debugging.
+ * - For production debugging on cPanel/Passenger, always prefer logToFile or another file-based logging method.
+ * - You can keep console.log for local development, where it will show in your terminal.
+ */
 
 function logToFile(message) {
   try {
@@ -13,7 +22,8 @@ function logToFile(message) {
   }
 }
 
-// Test: log to file on every middleware run (SSR or client)
+// Test: log to file and console on every middleware run (SSR or client)
+console.log('Test log from middleware: middleware executed')
 logToFile('Test log from middleware: middleware executed')
 
 export default defineNuxtRouteMiddleware(async (_to) => {
@@ -21,6 +31,7 @@ export default defineNuxtRouteMiddleware(async (_to) => {
   if (import.meta.server) {
     const event = useRequestEvent()
     const cookies = event?.node?.req?.headers?.cookie || ''
+    console.log('SSR cookies:', cookies)
     logToFile(`SSR cookies: ${cookies}`)
   }
   const { user, fetchUser, error } = useCurrentUser()
@@ -29,6 +40,7 @@ export default defineNuxtRouteMiddleware(async (_to) => {
   }
   if (!user.value || !('id' in user.value)) {
     const errMsg = error.value || 'Not authenticated'
+    console.log('Auth middleware failed:', errMsg)
     logToFile(`Auth middleware failed: ${errMsg}`)
     return navigateTo('/login')
   }
