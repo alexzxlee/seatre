@@ -1,3 +1,15 @@
+import fs from 'fs'
+import path from 'path'
+
+function logToFile(message: string) {
+  try {
+    const logPath = path.resolve('/tmp/nuxt-debug.log')
+    const timestamp = new Date().toISOString()
+    fs.appendFileSync(logPath, `[${timestamp}] [useApiFetch] ${message}\n`)
+  } catch (e) {
+    // Fails silently if cannot write
+  }
+}
 /**
  * API composable with CSRF protection
  *
@@ -31,6 +43,17 @@ export const useApiFetch = () => {
       'Content-Type': 'application/json',
       ...opts.headers,
       ...(csrfToken ? { 'x-csrf-token': csrfToken } : {})
+    }
+    // Log request details for SSR debugging
+    if (import.meta.server) {
+      const logMsg = `Request: url=${url}, opts=${JSON.stringify({
+        credentials: 'include',
+        headers,
+        ...opts,
+        body: opts.body ? '[stringified]' : undefined
+      })}`
+      console.log('[useApiFetch]', logMsg)
+      logToFile(logMsg)
     }
     const response = await fetch(url, {
       credentials: 'include',
