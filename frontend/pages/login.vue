@@ -345,9 +345,16 @@ watch(password, () => {
   text-decoration: underline;
 }
 
-/* Light tweaks on narrow screens while preserving 50/50 split */
+/* Hide image and make form full width on mobile */
 @media (max-width: 768px) {
-  .form-section { padding: 1rem; }
+  .image-section {
+    display: none;
+  }
+  .form-section {
+    width: 100vw;
+    flex: 1 1 100vw;
+    padding: 1rem;
+  }
   .login-form { max-width: 360px; gap: 1rem; }
   .brand-text { font-size: 1.5rem; }
 }
