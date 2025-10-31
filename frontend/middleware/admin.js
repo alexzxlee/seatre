@@ -5,18 +5,8 @@
  */
 
 import { useCurrentUser } from '../composables/useCurrentUser'
-import fs from 'fs'
-import path from 'path'
 
-function logToFile(message) {
-  try {
-    const logPath = path.resolve('/tmp/nuxt-debug.log')
-    const timestamp = new Date().toISOString()
-    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`)
-  } catch (e) {
-    // Fails silently if cannot write
-  }
-}
+import { logToFile } from '../utils/logToFile.js'
 
 export default defineNuxtRouteMiddleware(async (_to) => {
   const { user, fetchUser, error } = useCurrentUser()

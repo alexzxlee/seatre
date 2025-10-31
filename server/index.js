@@ -28,8 +28,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const PORT = process.env.PORT || 3001
+
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
+// --- Logging for CORS debugging ---
+import { logToFile } from './utils/logToFile.js'
+logToFile(`FRONTEND_URL: ${FRONTEND_URL}`)
+console.log('FRONTEND_URL:', FRONTEND_URL)
 
 // CORS with proper security (must be first)
 const allowedOrigins = [
