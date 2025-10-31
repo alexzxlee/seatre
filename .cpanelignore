@@ -1,0 +1,12 @@
+# Ignore files not needed on cPanel/production
+.env.example
+docker-compose.yml
+docker-compose.prod.yml
+docker-compose.dev.yml
+.dockerignore
+README.md
+*.md
+/tests
+/.vscode
+/.idea
+/.fleet
