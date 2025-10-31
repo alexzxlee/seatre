@@ -32,8 +32,24 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
 
 // CORS with proper security (must be first)
-app.use(cors({ 
-  origin: FRONTEND_URL, 
+const allowedOrigins = [
+  'https://everyonecancode.net',           // production frontend
+  'https://api.everyonecancode.net',       // production backend (API direct, e.g. for testing or server-to-server)
+  'https://test.everyonecancode.net',      // test domain (subdomain)
+  'http://localhost:3000',                 // local dev (Nuxt frontend)
+  'http://localhost:3001',                 // local dev (API direct)
+  'http://127.0.0.1:3000',                 // local dev (alternative)
+  // Add more as needed
+];
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like curl, Postman, or mobile apps)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'x-csrf-token'],
