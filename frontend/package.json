@@ -4,6 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "nuxt build",
+		"build:prod": "env-cmd -f .env.production nuxt build",
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
@@ -22,6 +23,7 @@
 		"@nuxt/devtools": "^1.6.0",
 		"@tailwindcss/vite": "^4.1.12",
 		"@types/node": "^20.19.21",
+		"env-cmd": "^11.0.0",
 		"tailwindcss": "^4.1.12"
 	}
 }
