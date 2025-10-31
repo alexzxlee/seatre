@@ -1,21 +1,57 @@
-Split architecture: Nuxt 3 frontend + Express backend
 
-Run in Docker:
-- docker-compose up --build
-- Frontend: http://localhost:3000
-- Backend: http://localhost:3001
+# Seatre: Nuxt 4 + Express Fullstack Project
 
-Environment:
-- FRONTEND_URL=http://localhost:3000
-- DB_HOST=mysql, DB_USER=root, DB_PASSWORD=..., DB_NAME=...
-- JWT_SECRET=...
-# Nuxt 3 Minimal Starter
+## Tech Stack
+
+- **Frontend:** Nuxt 4 (Vue 3, Vite, JavaScript)
+- **Styling:** Tailwind CSS, Nuxt UI
+- **Backend:** Express (Node.js)
+- **DevOps:** Docker, Docker Compose, cPanel/WHC
+
+---
+
+## Project Structure
+
+- `/frontend` – Nuxt 4 SSR frontend
+- `/server` – Express backend API
+
+---
+
+## Local Development
+
+### 1. Prerequisites
+
+- Node.js (LTS recommended)
+- Docker & Docker Compose (for containerized dev)
+- MySQL (or use Docker service)
+
+### 2. Environment Files
+
+- `.env` (root): Used by Docker Compose for local dev (contains both frontend and backend variables)
+- `frontend/.env.production`: Used for Nuxt production build (do NOT ignore in Docker build)
+- `server/.env.production`: Used for Express backend in production (injected at runtime, can be ignored in Docker build)
+- `.env.example`: Template for developers (never use real secrets)
+
+**Key variables:**
+- `FRONTEND_URL=http://localhost:3000` (dev) or your production domain (prod)
+- `DB_HOST=mysql`, `DB_USER=root`, `DB_PASSWORD=...`, `DB_NAME=...`
+- `JWT_SECRET=...` (use a unique, strong value for production; do NOT reuse dev secret)
+- `NUXT_PUBLIC_API_BASE=http://localhost:3001/api` (dev) or your backend URL (prod)
+
+---
+
+## Nuxt 4 Minimal Starter
+
+Look at the [Nuxt 4 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+
+---
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+
 ## Setup
 
-Make sure to install the dependencies:
+Make sure to install the dependencies in both `/frontend` and `/server`:
 
 ```bash
 # npm
@@ -31,9 +67,10 @@ yarn install
 bun install
 ```
 
+
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server on `http://localhost:3000` (Nuxt) and `http://localhost:3001` (Express):
 
 ```bash
 # npm
@@ -49,9 +86,10 @@ yarn dev
 bun run dev
 ```
 
+
 ## Production
 
-Build the application for production:
+Build the application for production (Nuxt):
 
 ```bash
 # npm
@@ -67,7 +105,8 @@ yarn build
 bun run build
 ```
 
-Locally preview production build:
+
+Locally preview production build (Nuxt):
 
 ```bash
 # npm
@@ -82,45 +121,54 @@ yarn preview
 # bun
 bun run preview
 ```
+
 ## Deploying to WHC/cPanel (frontend + backend)
 
 This project runs as two Node.js apps in cPanel: a Nuxt SSR frontend and an Express API backend.
 
-- Version control: In cPanel, use Git Version Control to clone this repo into `/home/USER/apps/seatre` (recommended), or upload files via File Manager/FTP.
+### Version Control & Deployment
+- In cPanel, use Git Version Control to clone this repo into `/home/USER/apps/seatre` (recommended), or upload files via File Manager/FTP.
 
-Backend (Express API)
+### Backend (Express API)
 - cPanel → Setup Node.js App → Create
 	- App root: `apps/seatre/server`
 	- Startup file: `index.js`
 	- Node version: choose the default available
-	- Environment variables:
+	- **Environment variables (set in cPanel UI, not from .env files!):**
 		- `NODE_ENV=production`
 		- `PORT=3001`
 		- `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`
-		- `JWT_SECRET`
+		- `JWT_SECRET` (use a unique, strong value for production)
 		- `FRONTEND_URL=https://your-frontend-domain`
 	- Click Run NPM Install, then Restart Application
 
-Frontend (Nuxt SSR)
+### Frontend (Nuxt SSR)
 - cPanel → Setup Node.js App → Create
 	- App root: `apps/seatre/frontend`
 	- Startup file: `server.cjs`
-	- Environment variables:
+	- **Environment variables:**
 		- `NODE_ENV=production`
 		- `NUXT_PUBLIC_API_BASE=https://api.your-domain` (or your backend URL)
+	- For Docker builds, make sure `frontend/.env.production` is present and NOT in `.dockerignore`.
 	- Click Run NPM Install
 	- Click Run JS Script → choose `build`
 	- Restart Application
 
-Domains and routing
+### Domains and Routing
 - Point the main domain to the frontend app.
 - Use a subdomain (e.g., `api.your-domain`) for the backend.
 
-Updating deployments
+### Updating Deployments
 - In Git Version Control, Pull latest changes.
-- For frontend: run `build` again, then Restart Application. For backend: Restart Application.
+- For frontend: run `build` again, then Restart Application.
+- For backend: Restart Application.
 
-Notes
+---
+
+## Notes & Best Practices
+
 - Backend CORS uses `FRONTEND_URL` and sets credentials. Ensure the frontend domain matches exactly (protocol + host).
 - In local dev, `/api` is proxied by Vite. In production, `NUXT_PUBLIC_API_BASE` controls the API base.
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- **Do NOT use the same JWT_SECRET for dev and prod. Generate a new, strong secret for production.**
+- Only `.env.example` should be committed with placeholder/example values. **Never commit real secrets.**
+- For more, see the [Nuxt deployment docs](https://nuxt.com/docs/getting-started/deployment).
