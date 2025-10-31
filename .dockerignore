@@ -10,5 +10,15 @@ dist
 # Ignore Dockerfile (if you're copying it for some reason. Usually you don't need to include your Dockerfile in the Docker image itself. The Dockerfile is used to build the Docker image, but once the image is built, the Dockerfile is no longer needed within the image. Excluding files that aren’t needed for running your application helps keep the image smaller. Excluding sensitive or unnecessary files reduces the risk of exposing them in a container.)
 # Dockerfile 
 
-# Ignore .env (Ignoring environment files is crucial if they contain sensitive information.)
+# Ignore .env at root (Ignoring environment files is crucial if they contain sensitive information.)
 .env
+
+# Do NOT ignore frontend/.env.production (Nuxt build needs it)
+# frontend/.env.production
+
+# Ignore backend (server) production env file
+server/.env.production
+
+# Ignore common OS/editor files
+.DS_Store
+.vscode
