@@ -1,6 +1,7 @@
 FROM node:24
 WORKDIR /server
 
+# copy package.json and package-lock.json before running npm ci
 COPY package*.json ./
 RUN npm ci --omit=dev
 
