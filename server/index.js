@@ -11,7 +11,7 @@ import authRouter from './routes/auth.js'
 import newsletterRouter from './routes/newsletter.js'
 import User from './models/User.js'
 import './models/NewsletterSubscription.js'
-import { logToFile } from '~/utils/logToFile'
+import { logToFile } from './utils/logToFile.js'
 
 // Temporary DB connectivity check (remove after verifying in cPanel logs)
 testConnection()

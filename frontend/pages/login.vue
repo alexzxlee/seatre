@@ -64,8 +64,8 @@ definePageMeta({
   layout: 'minimal'
 })
 
-const email = ref<string>('alexzxlee@outlook.com')
-const password = ref<string>('Alex2025')
+const email = ref<string>('')
+const password = ref<string>('')
 const error = ref<string>('')
 const loading = ref<boolean>(false)
 const apiFetch = useApiFetch()
