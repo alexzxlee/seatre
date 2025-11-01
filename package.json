@@ -2,8 +2,13 @@
   "name": "seatre",
   "private": true,
   "scripts": {
-    "dev": "docker-compose up --build",
-    "down": "docker-compose down -v"
+    "dev": "docker compose up --build",
+    "down": "docker compose down -v",
+    "rebuild": "docker compose build --no-cache",
+    "up": "docker compose up",
+    "clean:project": "sudo rm -rf frontend/node_modules frontend/package-lock.json && rm -rf frontend/.nuxt frontend/.output && rm -rf node_modules package-lock.json && rm -rf server/node_modules server/package-lock.json",
+    "clean:vscode": "rm -rf ~/Library/Application\\ Support/Code/User/globalStorage/github.copilot-* && rm -rf ~/Library/Application\\ Support/Code/logs/* && rm -rf ~/Library/Application\\ Support/Code/CachedData/* && rm -rf ~/Library/Application\\ Support/Code/User/workspaceStorage/* && rm -rf ~/.vscode/extensions/github.copilot-* && rm -rf ~/.vscode/extensions/github.copilot-chat-* && rm -rf ~/.vscode/extensions/github.copilot-labs-*",
+    "clean:system": "npm cache clean --force && docker system prune -a"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
