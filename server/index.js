@@ -42,14 +42,14 @@ const allowedOrigins = [
   'https://test.everyonecancode.net',      // test domain (subdomain)
   'http://localhost:3000',                 // local dev (Nuxt frontend)
   'http://localhost:3001',                 // local dev (API direct)
-  'http://127.0.0.1:3000',                 // local dev (alternative)
+  'http://127.0.0.1:3000'                  // local dev (alternative)
   // Add more as needed
 ];
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like curl, Postman, or mobile apps)
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+      callback(null, origin);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
