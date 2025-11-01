@@ -1,15 +1,4 @@
-import fs from 'fs'
-import path from 'path'
-
-function logToFile(message: string) {
-  try {
-    const logPath = path.resolve('/tmp/nuxt-debug.log')
-    const timestamp = new Date().toISOString()
-    fs.appendFileSync(logPath, `[${timestamp}] [useApiFetch] ${message}\n`)
-  } catch (e) {
-    // Fails silently if cannot write
-  }
-}
+import { logToFile } from '~/utils/logToFile'
 /**
  * API composable with CSRF protection
  *

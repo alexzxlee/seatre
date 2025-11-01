@@ -1,18 +1,7 @@
 
 import { useState } from '#imports'
+import { logToFile } from '~/utils/logToFile'
 import { useApiFetch } from './useApi'
-import fs from 'fs'
-import path from 'path'
-
-function logToFile(message: string) {
-  try {
-    const logPath = path.resolve('/tmp/nuxt-debug.log')
-    const timestamp = new Date().toISOString()
-    fs.appendFileSync(logPath, `[${timestamp}] [useCurrentUser] ${message}\n`)
-  } catch (e) {
-    // Fails silently if cannot write
-  }
-}
 
 interface User {
   id: number

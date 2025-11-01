@@ -1,10 +1,8 @@
 
 import { useCurrentUser } from '../composables/useCurrentUser'
+import { logToFile } from '~/utils/logToFile'
 
-
-import { logToFile } from '../utils/logToFile.js'
-
-// Test: log to file and console on every middleware run (SSR or client)
+// Test: logToFile and console.log on every middleware run (SSR or client)
 console.log('Test log from middleware: middleware executed')
 logToFile('Test log from middleware: middleware executed')
 

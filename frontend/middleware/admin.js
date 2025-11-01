@@ -5,8 +5,7 @@
  */
 
 import { useCurrentUser } from '../composables/useCurrentUser'
-
-import { logToFile } from '../utils/logToFile.js'
+import { logToFile } from '~/utils/logToFile'
 
 export default defineNuxtRouteMiddleware(async (_to) => {
   const { user, fetchUser, error } = useCurrentUser()

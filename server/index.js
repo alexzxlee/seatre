@@ -11,6 +11,7 @@ import authRouter from './routes/auth.js'
 import newsletterRouter from './routes/newsletter.js'
 import User from './models/User.js'
 import './models/NewsletterSubscription.js'
+import { logToFile } from '~/utils/logToFile'
 
 // Temporary DB connectivity check (remove after verifying in cPanel logs)
 testConnection()
@@ -28,11 +29,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const PORT = process.env.PORT || 3001
-
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
 // --- Logging for CORS debugging ---
-import { logToFile } from './utils/logToFile.js'
 logToFile(`FRONTEND_URL: ${FRONTEND_URL}`)
 console.log('FRONTEND_URL:', FRONTEND_URL)
 

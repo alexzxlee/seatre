@@ -1,4 +1,3 @@
-
 /**
  * Server-side logging guidance:
  * - console.log in server-side middleware will NOT appear in the browser console and usually won’t show up in production logs on cPanel/Passenger.
@@ -13,7 +12,7 @@ import path from 'path'
  * Append a log message to /tmp/nuxt-debug.log with timestamp.
  * Fails silently if file cannot be written.
  */
-export function logToFile(message) {
+export function logToFile(message: string): void {
   try {
     const logPath = path.resolve('/tmp/nuxt-debug.log')
     const timestamp = new Date().toISOString()
