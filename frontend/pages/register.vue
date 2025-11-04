@@ -293,8 +293,19 @@ const register = async () => {
   text-decoration: underline;
 }
 
+/* Hide image and make form full width on mobile */
 @media (max-width: 768px) {
-  .form-section { padding: 1rem; }
-  .login-form { max-width: 360px; gap: 1rem; }
+  .image-section {
+    display: none;
+  }
+  .form-section { 
+    width: 100vw;
+    flex: 1 1 100vw;
+    padding: 1rem; 
+  }
+  .login-form { 
+    max-width: 360px; 
+    gap: 1rem; 
+  }
 }
 </style>

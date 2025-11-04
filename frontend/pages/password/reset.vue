@@ -82,6 +82,10 @@ watch([password, confirm], () => { if (fieldError.value) fieldError.value = '' }
 
 .image-section {
   flex: 0 0 50vw;
+  width: 50vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-image {

@@ -87,7 +87,10 @@ watch(email, () => { if (fieldError.value) fieldError.value = '' })
 
 .image-section {
   flex: 0 0 50vw;
+  width: 50vw;
+  height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .hero-image {
@@ -95,6 +98,7 @@ watch(email, () => { if (fieldError.value) fieldError.value = '' })
   height: 100%;
   object-fit: cover;
   object-position: center;
+  display: block;
 }
 
 .form-section {
@@ -225,11 +229,16 @@ watch(email, () => { if (fieldError.value) fieldError.value = '' })
   text-decoration: underline;
 }
 
+/* Hide image and make form full width on mobile */
 @media (max-width: 768px) {
+  .image-section {
+    display: none;
+  }
   .form-section {
+    width: 100vw;
+    flex: 1 1 100vw;
     padding: 1rem;
   }
-  
   .card {
     max-width: 360px;
   }
