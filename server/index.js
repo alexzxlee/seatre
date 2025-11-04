@@ -55,6 +55,25 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
+    //   origin: (origin, callback) => {
+    //   if (!origin) {
+    //     callback(null, origin);
+    //     return;
+    //   }
+      
+    //   // Check if origin matches allowed patterns (with or without www)
+    //   const normalizedOrigin = origin.replace(/^https?:\/\/(www\.)?/, '');
+    //   const isAllowed = allowedOrigins.some(allowed => {
+    //     const normalizedAllowed = allowed.replace(/^https?:\/\/(www\.)?/, '');
+    //     return normalizedAllowed === normalizedOrigin;
+    //   });
+      
+    //   if (isAllowed) {
+    //     callback(null, origin);
+    //   } else {
+    //     callback(new Error('Not allowed by CORS'));
+    //   }
+    // }
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'x-csrf-token'],
