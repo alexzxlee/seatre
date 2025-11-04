@@ -38,6 +38,7 @@ console.log('FRONTEND_URL:', FRONTEND_URL)
 // CORS with proper security (must be first)
 const allowedOrigins = [
   'https://everyonecancode.net',           // production frontend
+  'https://www.everyonecancode.net',       // production frontend with www
   'https://api.everyonecancode.net',       // production backend (API direct, e.g. for testing or server-to-server)
   'https://test.everyonecancode.net',      // test domain (subdomain)
   'http://localhost:3000',                 // local dev (Nuxt frontend)
