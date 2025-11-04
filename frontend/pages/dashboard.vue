@@ -12,24 +12,33 @@
           <div class="flex items-center space-x-4">
             <ClientOnly>
               <div v-if="user" class="text-sm text-gray-700">
-                Welcome, <span class="font-medium">{{ user.email.split('@')[0] }}</span>
-                <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full"
-                  :class="user.role === 'admin' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'">
-                  {{ user.role }}
-                </span>
+                <!-- Desktop: single line layout, Mobile: stacked layout -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
+                  <div>Welcome, <span class="font-medium">{{ user.email.split('@')[0] }}</span></div>
+                  <div class="flex items-center space-x-2 mt-1 sm:mt-0">
+                    <span class="px-2 py-1 text-xs font-medium rounded-full"
+                    :class="user.role === 'admin' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'">
+                    {{ user.role }}
+                    </span>
+                    <button @click="logout" class="logout-btn px-3 py-1 text-sm rounded transition-colors cursor-pointer">
+                      Logout
+                    </button>
+                  </div>
+                </div>
               </div>
               <template #fallback>
                 <div class="text-sm text-gray-700">
-                  Welcome, <span class="font-medium opacity-0">loading</span>
-                  <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800 opacity-0">
-                    user
-                  </span>
+                  <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
+                    <div>Welcome, <span class="font-medium opacity-0">loading</span></div>
+                    <div class="flex items-center space-x-2 mt-1 sm:mt-0">
+                      <span class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800 opacity-0">
+                        user
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </template>
             </ClientOnly>
-            <button @click="logout" class="logout-btn px-3 py-1 text-sm rounded transition-colors cursor-pointer">
-              Logout
-            </button>
           </div>
         </div>
       </div>
